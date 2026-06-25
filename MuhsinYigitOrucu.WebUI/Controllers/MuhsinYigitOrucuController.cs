@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MuhsinYigitOrucu.DtoLayer.UIDtos.SendMessageSectionDto;
 using System.Text.Json;
 
 namespace MuhsinYigitOrucu.WebUI.Controllers
 {
-    [AllowAnonymous]
     public class MuhsinYigitOrucuController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -17,15 +15,6 @@ namespace MuhsinYigitOrucu.WebUI.Controllers
 
         public IActionResult Index()
         {
-            if (TempData["RegisterErrors"] != null)
-            {
-                var errorsJson = TempData["RegisterErrors"]?.ToString();
-
-                var errors = JsonSerializer.Deserialize<List<string>>(errorsJson!);
-
-                ViewBag.RegisterErrors = errors;
-            }
-
             if (TempData["LoginError"] != null)
             {
                 var error = TempData["LoginError"]?.ToString();

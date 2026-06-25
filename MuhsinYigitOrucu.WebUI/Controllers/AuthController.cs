@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MuhsinYigitOrucu.DtoLayer.Dtos.AuthsDtos;
 using System.Security.Claims;
 
 namespace MuhsinYigitOrucu.WebUI.Controllers
 {
-    [AllowAnonymous]
     public class AuthController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
