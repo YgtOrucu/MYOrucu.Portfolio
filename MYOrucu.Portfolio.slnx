@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="MuhsinYigitOrucu.DtoLayer/MuhsinYigitOrucu.DtoLayer.csproj" Id="d59946a2-9ee2-4048-b19a-f26be67ad45a" />
+    <Project Path="MuhsinYigitOrucu.EntityLayer/MuhsinYigitOrucu.EntityLayer.csproj" Id="feb37cdf-8d44-4674-8d40-eceb5556a69b" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="MuhsinYigitOrucu.WebApi/MuhsinYigitOrucu.WebApi.csproj" />
+    <Project Path="MuhsinYigitOrucu.WebUI/MuhsinYigitOrucu.WebUI.csproj" />
+  </Folder>
+  <Project Path="MuhsinYigitOrucu.BusinessLayer/MuhsinYigitOrucu.BusinessLayer.csproj" Id="3ae75776-af5e-4e5a-9955-b7c14e78b944" />
+  <Project Path="MuhsinYigitOrucu.DataAccessLayer/MuhsinYigitOrucu.DataAccessLayer.csproj" Id="551afe8e-ce8c-4181-8d8e-729164d8f4d4" />
+</Solution>

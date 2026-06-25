@@ -1,0 +1,90 @@
+﻿@model List<AboutListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Hakkımda Yönetimi";
+    ViewData["AdminSection"] = "Hakkımda";
+    int count = 0;
+}
+
+<div class="al-header">
+    <div>
+        <h1 class="al-title">Hakkımda Yönetimi</h1>
+        <p class="al-subtitle">// about &mdash; kişisel bilgiler</p>
+    </div>
+    @if (!Model.Any())
+    {
+        <a href="/AdminAbout/AboutCreate" class="btn-add">
+            <i class="bi bi-plus-lg"></i> Yeni Bilgi Ekle
+        </a>
+    }
+
+</div>
+
+<div class="al-card">
+    <div class="al-card-header">
+        <div class="al-card-header-icon"><i class="bi bi-person-lines-fill"></i></div>
+        <span class="al-card-header-title">Kayıt Listesi</span>
+        <span class="al-count-badge">@Model.Count kayıt</span>
+    </div>
+
+    <div class="al-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="al-empty">
+                <i class="bi bi-inbox"></i>
+                <p>Henüz kayıt eklenmemiş. "Yeni Bilgi Ekle" ile başlayın.</p>
+            </div>
+        }
+        else
+        {
+            <table class="al-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad Soyad</th>
+                        <th>Marka Kısaltması</th>
+                        <th>Konum</th>
+                        <th>E-posta</th>
+                        <th>Telefon</th>
+                        <th>Kısa Bio</th>
+                        <th style="text-align:right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><span class="cell-mono">@count</span></td>
+                            <td><span class="cell-primary">@item.FullName</span></td>
+                            <td><span class="cell-badge">@item.BrandInitials</span></td>
+                            <td>
+                                <span style="display:inline-flex;align-items:center;gap:.35rem;">
+                                    <i class="bi bi-geo-alt" style="color:var(--accent);font-size:.8rem;"></i>
+                                    @item.Location
+                                </span>
+                            </td>
+                            <td><span class="cell-mono">@item.EmailAddress</span></td>
+                            <td><span class="cell-mono">@item.PhoneNumber</span></td>
+                            <td>
+                                <span class="cell-bio" title="@item.ShortBio">(@item.ShortBio</span>
+                            </td>
+                            <td>
+                                <div class="action-cell" style="justify-content:flex-end;">
+                                    <a href="/AdminAbout/AboutUpdate/@item.AboutId" class="btn-edit">
+                                        <i class="bi bi-pencil"></i> Düzenle
+                                    </a>
+                                    <a href="/AdminAbout/AboutDelete/@item.AboutId"
+                                       class="btn-delete"
+                                       onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

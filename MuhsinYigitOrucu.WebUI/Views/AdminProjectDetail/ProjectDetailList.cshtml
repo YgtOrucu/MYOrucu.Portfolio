@@ -1,0 +1,102 @@
+﻿@model List<ProjectDetailsListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Proje Detayları";
+    ViewData["AdminSection"] = "Proje Detayları";
+    int count = 0;
+}
+
+<div class="pdl-header">
+    <div>
+        <h1 class="pdl-title">Proje Detayları</h1>
+        <p class="pdl-subtitle">// project-details &mdash; detay sayfaları yönetimi</p>
+    </div>
+    <a href="/AdminProjectDetail/ProjectDetailCreate" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Detay Ekle
+    </a>
+</div>
+
+<div class="pdl-card">
+    <div class="pdl-card-header">
+        <div class="pdl-card-icon"><i class="bi bi-layout-text-sidebar-reverse"></i></div>
+        <span class="pdl-card-title">Detay Kayıtları</span>
+        <span class="pdl-count-badge">@Model.Count kayıt</span>
+    </div>
+
+    <div class="pdl-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="pdl-empty">
+                <i class="bi bi-journals"></i>
+                <p>Henüz proje detayı eklenmemiş. "Yeni Detay Ekle" ile başlayın.</p>
+            </div>
+        }
+        else
+        {
+            <table class="pdl-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Proje Adı</th>
+                        <th>Kategori</th>
+                        <th>Durum</th>
+                        <th>Yıl</th>
+                        <th>Rol</th>
+                        <th>Kısa Açıklama</th>
+                        <th style="width:160px; text-align:center">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><span class="cell-mono">@count</span></td>
+                            <td><span class="cell-primary">@item.Title</span></td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.Category))
+                                {
+                                    <span class="cat-chip">@item.Category</span>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var sc = item.Status?.ToLower() switch
+                                    {
+                                        "tamamlandı" or "completed" => "status-done",
+                                        "devam ediyor" or "in progress" => "status-progress",
+                                        _ => "status-default"
+                                    };
+                                }
+                                @if (!string.IsNullOrWhiteSpace(item.Status))
+                                {
+                                    <span class="status-badge @sc">
+                                        <i class="bi bi-circle-fill" style="font-size:.45rem"></i>
+                                        @item.Status
+                                    </span>
+                                }
+                            </td>
+                            <td><span class="cell-mono">@item.Year</span></td>
+                            <td><span style="font-size:.82rem; color:var(--text-secondary)">@item.Role</span></td>
+                            <td>
+                                <span class="cell-clamp" title="@item.ShortDescription">@item.ShortDescription</span>
+                            </td>
+                            <td>
+                                <div class="action-cell">
+                                    <a href="/AdminProjectDetail/ProjectDetailUpdate/@item.ProjectDetailId" class="btn-edit">
+                                        <i class="bi bi-pencil"></i> Düzenle
+                                    </a>
+                                    <a href="/AdminProjectDetail/ProjectDetailDelete/@item.ProjectDetailId"
+                                       class="btn-delete"
+                                       onclick="return confirm('Bu proje detayını silmek istediğinize emin misiniz?')">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

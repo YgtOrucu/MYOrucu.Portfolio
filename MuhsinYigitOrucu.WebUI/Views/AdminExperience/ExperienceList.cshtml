@@ -1,0 +1,97 @@
+﻿@model List<ExperienceListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Deneyimler";
+    ViewData["AdminSection"] = "Deneyimler";
+    int count = 0;
+}
+
+<div class="el-header">
+    <div>
+        <h1 class="el-title">Deneyimler</h1>
+        <p class="el-subtitle">// experience &mdash; iş deneyimleri yönetimi</p>
+    </div>
+    <a href="/AdminExperience/ExperienceCreate" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Deneyim Ekle
+    </a>
+</div>
+
+<div class="el-card">
+    <div class="el-card-header">
+        <div class="el-card-icon"><i class="bi bi-briefcase-fill"></i></div>
+        <span class="el-card-title">Deneyim Listesi</span>
+        <span class="el-count-badge">@Model.Count kayıt</span>
+    </div>
+
+    <div class="el-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="el-empty">
+                <i class="bi bi-briefcase"></i>
+                <p>Henüz deneyim eklenmemiş. "Yeni Deneyim Ekle" ile başlayın.</p>
+            </div>
+        }
+        else
+        {
+            <table class="el-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Şirket</th>
+                        <th>Pozisyon</th>
+                        <th>Tarih</th>
+                        <th>Çalışma Şekli</th>
+                        <th style="text-align:right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><span class="cell-mono">@count</span></td>
+                            <td>
+                                <span class="cell-company">
+                                    <i class="bi bi-building"></i>
+                                    @item.Company
+                                </span>
+                            </td>
+                            <td><span class="cell-primary">@item.Title</span></td>
+                            <td>
+                                <span style="display:inline-flex;align-items:center;gap:.35rem;">
+                                    <i class="bi bi-calendar3" style="color:var(--accent);font-size:.8rem;"></i>
+                                    <span class="cell-mono">@item.Date</span>
+                                </span>
+                            </td>
+                            <td>
+                                @{
+                                    var wm = item.WorkMethod?.ToLower() ?? "";
+                                    var wmClass = wm switch
+                                    {
+                                        "remote" or "uzaktan" => "wm-remote",
+                                        "onsite" or "ofis" => "wm-onsite",
+                                        "hybrid" or "hibrit" => "wm-hybrid",
+                                        _ => "wm-default"
+                                    };
+                                }
+                                <span class="wm-badge @wmClass">@item.WorkMethod</span>
+                            </td>
+                            <td>
+                                <div class="action-cell">
+                                    <a href="/AdminExperience/ExperienceUpdate?id=@item.ExperienceId" class="btn-edit">
+                                        <i class="bi bi-pencil"></i> Düzenle
+                                    </a>
+                                    <a href="/AdminExperience/ExperienceDelete?id=@item.ExperienceId"
+                                       class="btn-delete"
+                                       onclick="return confirm('Bu deneyimi silmek istediğinize emin misiniz?')">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

@@ -1,0 +1,271 @@
+﻿@model GetForProjectDetailDto
+
+<div id="pd-lightbox" role="dialog" aria-modal="true" aria-label="Görsel önizleme">
+    <button id="pd-lightbox-close" aria-label="Kapat"><i class="bi bi-x-lg"></i></button>
+    <img id="pd-lightbox-img" src="" alt="" />
+</div>
+
+<div class="pd-hero">
+    <div class="pd-hero-bg"
+         style="background-image: url('@Model.CoverImageUrl')"></div>
+    <div class="pd-hero-overlay"></div>
+
+    <div class="pd-hero-content">
+        <div class="container">
+
+            <a href="/Project/GetAllProject" class="pd-back">
+                <i class="bi bi-arrow-left"></i> Tüm Projelere Dön
+            </a>
+
+            <div class="pd-meta-chips">
+                @if (!string.IsNullOrWhiteSpace(Model.Category))
+                {
+                    <span class="pd-chip pd-chip-accent">
+                        <i class="bi bi-folder2-open"></i> @Model.Category
+                    </span>
+                }
+                @{
+                    var statusClass = Model.Status?.ToLower() switch
+                    {
+                        "tamamlandı" or "completed" => "pd-chip-green",
+                        "devam ediyor" or "in progress" => "pd-chip-yellow",
+                        _ => "pd-chip-neutral"
+                    };
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Status))
+                {
+                    <span class="pd-chip @statusClass">
+                        <i class="bi bi-circle-fill" style="font-size:.5rem"></i>
+                        @Model.Status
+                    </span>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Year))
+                {
+                    <span class="pd-chip pd-chip-neutral">
+                        <i class="bi bi-calendar3"></i> @Model.Year
+                    </span>
+                }
+            </div>
+
+            <h1 class="pd-title">@Model.Title</h1>
+            <p class="pd-tagline">@Model.ShortDescription</p>
+
+            <div class="pd-stats">
+                @if (!string.IsNullOrWhiteSpace(Model.TeamSize))
+                {
+                    <span class="pd-stat"><i class="bi bi-people"></i> @Model.TeamSize</span>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Duration))
+                {
+                    <span class="pd-stat"><i class="bi bi-clock"></i> @Model.Duration</span>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Role))
+                {
+                    <span class="pd-stat"><i class="bi bi-person-badge"></i> @Model.Role</span>
+                }
+            </div>
+
+            <div class="pd-hero-actions" style="margin-top:1.6rem">
+                @if (!string.IsNullOrWhiteSpace(Model.GithubLink))
+                {
+                    <a href="@Model.GithubLink" target="_blank" rel="noopener" class="pd-btn pd-btn-ghost">
+                        <i class="bi bi-github"></i> GitHub'da Görüntüle
+                    </a>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.LiveDemoUrl))
+                {
+                    <a href="@Model.LiveDemoUrl" target="_blank" rel="noopener" class="pd-btn pd-btn-primary">
+                        <i class="bi bi-box-arrow-up-right"></i> Canlı Demo
+                    </a>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="pd-body">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                @if (!string.IsNullOrWhiteSpace(Model.FullDescription))
+                {
+                    <div class="pd-section">
+                        <div class="pd-section-header">
+                            <div class="pd-section-icon"><i class="bi bi-file-text"></i></div>
+                            <span class="pd-section-title">// Proje Hakkında</span>
+                        </div>
+                        <div class="pd-section-body">
+                            <div class="pd-description">
+                                @foreach (var paragraph in Model.FullDescription.Split('\n', System.StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                    <p>@paragraph</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Features != null && Model.Features.Any())
+                {
+                    <div class="pd-section">
+                        <div class="pd-section-header">
+                            <div class="pd-section-icon"><i class="bi bi-stars"></i></div>
+                            <span class="pd-section-title">// Temel Özellikler</span>
+                        </div>
+                        <div class="pd-section-body">
+                            <ul class="pd-feature-list">
+                                @foreach (var feature in Model.Features)
+                                {
+                                    <li>@feature</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Challenges != null && Model.Challenges.Any())
+                {
+                    <div class="pd-section">
+                        <div class="pd-section-header">
+                            <div class="pd-section-icon"><i class="bi bi-cpu"></i></div>
+                            <span class="pd-section-title">// Teknik Zorluklar &amp; Çözümler</span>
+                        </div>
+                        <div class="pd-section-body">
+                            <ul class="pd-feature-list">
+                                @foreach (var challenge in Model.Challenges)
+                                {
+                                    <li>@challenge</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.GalleryImages != null && Model.GalleryImages.Any())
+                {
+                    <div class="pd-section">
+                        <div class="pd-section-header">
+                            <div class="pd-section-icon"><i class="bi bi-images"></i></div>
+                            <span class="pd-section-title">// Ekran Görüntüleri</span>
+                        </div>
+                        <div class="pd-section-body">
+                            <div class="pd-gallery">
+                                @foreach (var img in Model.GalleryImages)
+                                {
+                                    <div class="pd-gallery-item"
+                                         data-src="@img"
+                                         role="button"
+                                         tabindex="0"
+                                         aria-label="Görseli büyüt">
+                                        <img src="@img" alt="Proje ekran görüntüsü" loading="lazy" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="pd-section" style="position: sticky; top: 1.5rem;">
+                    <div class="pd-section-header">
+                        <div class="pd-section-icon"><i class="bi bi-info-circle"></i></div>
+                        <span class="pd-section-title">// Proje Bilgileri</span>
+                    </div>
+                    <div class="pd-section-body">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Status))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Durum</span>
+                                <span class="pd-info-val">@Model.Status</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Year))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Yıl</span>
+                                <span class="pd-info-val">@Model.Year</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Duration))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Süre</span>
+                                <span class="pd-info-val">@Model.Duration</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Role))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Rol</span>
+                                <span class="pd-info-val">@Model.Role</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.TeamSize))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Ekip</span>
+                                <span class="pd-info-val">@Model.TeamSize</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Category))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Kategori</span>
+                                <span class="pd-info-val">@Model.Category</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.GithubLink))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">GitHub</span>
+                                <span class="pd-info-val">
+                                    <a href="@Model.GithubLink" target="_blank" rel="noopener">
+                                        <i class="bi bi-github"></i> Repoyu Aç
+                                    </a>
+                                </span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.LiveDemoUrl))
+                        {
+                            <div class="pd-info-row">
+                                <span class="pd-info-key">Canlı Demo</span>
+                                <span class="pd-info-val">
+                                    <a href="@Model.LiveDemoUrl" target="_blank" rel="noopener">
+                                        <i class="bi bi-box-arrow-up-right"></i> Siteyi Ziyaret Et
+                                    </a>
+                                </span>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                @if (Model.UseTechnology != null && Model.UseTechnology.Any())
+                {
+                    <div class="pd-section" style="margin-top:1.5rem">
+                        <div class="pd-section-header">
+                            <div class="pd-section-icon"><i class="bi bi-tags"></i></div>
+                            <span class="pd-section-title">// Teknolojiler</span>
+                        </div>
+                        <div class="pd-section-body">
+                            <div class="pd-tech-grid">
+                                @foreach (var tech in Model.UseTechnology)
+                                {
+                                    <span class="pd-tech-chip">@tech</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

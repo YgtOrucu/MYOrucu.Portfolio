@@ -1,0 +1,37 @@
+﻿<a href="#hero" id="backToTop" aria-label="Yukarı dön" title="Yukarı Dön">
+    <i class="bi bi-chevron-up"></i>
+</a>
+
+<div class="modal fade" id="adminLoginModal" tabindex="-1" aria-labelledby="adminLoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 460px;">
+        <div class="modal-content admin-modal-content">
+
+            <div class="admin-modal-header">
+                <div class="admin-modal-header-inner">
+                    <div class="admin-modal-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h5 class="admin-modal-title" id="adminLoginModalLabel">
+                            <span id="modalHeadingText">Yönetici Girişi</span>
+                        </h5>
+                        <p class="admin-modal-subtitle" id="modalSubText">Panele erişmek için giriş yapın</p>
+                    </div>
+                </div>
+                <button type="button" class="admin-modal-close" data-bs-dismiss="modal" aria-label="Kapat">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="admin-modal-tabs">
+                <button class="admin-tab-btn active" id="tabLogin" type="button">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Giriş Yap
+                </button>
+            </div>
+
+            <div class="admin-modal-body">
+                @await Html.PartialAsync("~/Views/Auth/Login.cshtml")
+            </div>
+        </div>
+    </div>
+</div>

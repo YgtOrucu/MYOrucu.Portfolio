@@ -1,0 +1,199 @@
+﻿@model UpdateProjectDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Proje Güncelle";
+    ViewData["AdminSection"] = "Projeler";
+}
+
+<nav class="pu-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminProject/ProjectList"><i class="bi bi-grid-1x2-fill"></i> Projeler</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>Güncelle &mdash; #@Model.ProjectId</span>
+</nav>
+
+<div class="pu-header">
+    <h1 class="pu-title">Proje Güncelle</h1>
+    <p class="pu-subtitle">// projects/update &mdash; mevcut proje kaydını düzenle</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post"
+      action="/AdminProject/ProjectUpdate"
+      enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
+    <input type="hidden" name="ImageUrl" value="@Model.ImageUrl" />
+
+    <div class="pu-card">
+        <div class="pu-card-header">
+            <div class="pu-card-icon"><i class="bi bi-info-circle"></i></div>
+            <span class="pu-card-title">// Proje Bilgileri</span>
+            <span class="pu-id-chip">ID: @Model.ProjectId</span>
+        </div>
+        <div class="pu-card-body">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="pu-field">
+                        <label class="pu-label" for="Title">Proje Adı</label>
+                        <input type="text" class="pu-input" id="Title" name="Title"
+                               value="@Model.Title"
+                               placeholder="CloudShop Platform" required />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pu-field">
+                        <label class="pu-label" for="MiniDescription">Kısa Açıklama</label>
+                        <textarea class="pu-textarea" id="MiniDescription" name="MiniDescription"
+                                  rows="3"
+                                  placeholder="Projenin kısa ve etkileyici bir tanımı...">@Model.MiniDescription</textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pu-field">
+                        <label class="pu-label" for="GithubLink">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub Linki
+                        </label>
+                        <input type="url" class="pu-input" id="GithubLink" name="GithubLink"
+                               value="@Model.GithubLink"
+                               placeholder="https://github.com/kullanici/proje" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pu-card">
+        <div class="pu-card-header">
+            <div class="pu-card-icon"><i class="bi bi-image"></i></div>
+            <span class="pu-card-title">// Proje Görseli</span>
+        </div>
+        <div class="pu-card-body">
+
+            <label class="pu-label">Mevcut Görsel</label>
+            <div class="current-image-wrap">
+                @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl"
+                         alt="Mevcut görsel"
+                         class="current-image-thumb"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <div class="current-image-thumb-placeholder" style="display:none">
+                        <i class="bi bi-image-alt"></i>
+                    </div>
+                    <div class="current-image-info">
+                        <div class="current-image-label">Kayıtlı URL</div>
+                        <a href="@Model.ImageUrl" target="_blank" rel="noopener"
+                           class="current-image-url">@Model.ImageUrl</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="current-image-thumb-placeholder">
+                        <i class="bi bi-image"></i>
+                    </div>
+                    <div class="current-image-info">
+                        <div class="current-image-label">Kayıtlı Görsel</div>
+                        <span style="font-size:.8rem;color:var(--text-muted);font-style:italic;">
+                            Görsel bulunamadı
+                        </span>
+                    </div>
+                }
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="pu-label">Yeni Dosya Seç (Değiştir)</label>
+                    <div class="file-upload-zone">
+                        <input type="file"
+                               name="FormFile"
+                               accept="image/*"
+                               aria-label="Yeni proje görseli seç" />
+                        <i class="bi bi-cloud-arrow-up file-upload-icon"></i>
+                        <p class="file-upload-text">
+                            <strong>Tıkla</strong> veya dosyayı sürükle
+                        </p>
+                        <p class="file-upload-hint">Mevcut görselin yerini alacak · PNG, JPG, WEBP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pu-card">
+        <div class="pu-card-header">
+            <div class="pu-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="pu-card-title">// Kullanılan Teknolojiler</span>
+        </div>
+        <div class="pu-card-body">
+            <span class="pu-hint" style="display:block;margin-bottom:.75rem;">
+                Her alan proje kartında bir teknoloji etiketi olarak gösterilecek.
+            </span>
+
+            @if (Model.UseTechnology != null && Model.UseTechnology.Any())
+            {
+                <div class="existing-chip">
+                    <i class="bi bi-check-circle-fill"></i>
+                    @Model.UseTechnology.Count mevcut teknoloji yüklendi
+                </div>
+            }
+
+            <div class="dyn-list" id="techList">
+                @if (Model.UseTechnology != null)
+                {
+                    for (int i = 0; i < Model.UseTechnology.Count; i++)
+                    {
+                        <div class="dyn-row">
+                            <input type="text" class="pu-input"
+                                   name="UseTechnology[@i]"
+                                   value="@Model.UseTechnology[i]"
+                                   placeholder=".NET 8 / React / PostgreSQL ..." />
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+
+            <button type="button" class="btn-dyn-add" id="addTech">
+                <i class="bi bi-plus-lg"></i> Teknoloji Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pu-card">
+        <div class="pu-card-header">
+            <div class="pu-card-icon"><i class="bi bi-house-door"></i></div>
+            <span class="pu-card-title">// Anasayfa Görünürlüğü</span>
+        </div>
+        <div class="pu-card-body">
+            <div class="pu-field">
+                <div class="form-check form-switch">
+                    <input asp-for="ShowOnHomePage" class="form-check-input" />
+                    <label asp-for="ShowOnHomePage" class="form-check-label">
+                        Bu proje anasayfada gösterilsin
+                    </label>
+                </div>
+                <span class="pu-hint">Aktif edilirse proje, anasayfadaki öne çıkan projeler bölümünde listelenir.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pu-card">
+        <div class="pu-card-body">
+            <div class="pu-form-actions">
+                <button type="submit" class="btn-update">
+                    <i class="bi bi-arrow-repeat"></i> Güncelle
+                </button>
+                <a href="/AdminProject/ProjectList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

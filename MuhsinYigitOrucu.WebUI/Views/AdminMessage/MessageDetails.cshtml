@@ -1,0 +1,144 @@
+﻿@model MessageListDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Mesaj Detayı";
+    ViewData["AdminSection"] = "Gelen Mesajlar";
+}
+
+<nav class="md-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminMessage/MessageList"><i class="bi bi-inbox-fill"></i> Gelen Mesajlar</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>#@Model.MessageId &mdash; @Model.NameSurname</span>
+</nav>
+
+<div class="md-header">
+    <h1 class="md-title">Mesaj Detayı</h1>
+    <p class="md-subtitle">// messages/details &mdash; mesajı görüntüle &amp; yanıtla</p>
+</div>
+
+<div class="row g-4 align-items-start">
+    <div class="col-md-6">
+        <div class="md-card">
+            <div class="md-card-header">
+                <div class="md-card-icon"><i class="bi bi-envelope-open-fill"></i></div>
+                <span class="md-card-title">// Gelen Mesaj</span>
+            </div>
+            <div class="md-card-body">
+
+                <div style="display:flex; align-items:center; gap:1rem; margin-bottom:.25rem;">
+                    <div class="sender-avatar">
+                        @(Model.NameSurname?.Length > 0 ? Model.NameSurname[0].ToString().ToUpper() : "?")
+                    </div>
+                    <div class="sender-info">
+                        <div class="sender-name">@Model.NameSurname</div>
+                        <div class="sender-email">@Model.Email</div>
+                    </div>
+                </div>
+
+                <div class="msg-meta">
+                    <div class="msg-meta-row">
+                        <span class="msg-meta-key">Kimden</span>
+                        <span class="msg-meta-val"><strong>@Model.NameSurname</strong></span>
+                    </div>
+                    <div class="msg-meta-row">
+                        <span class="msg-meta-key">E-posta</span>
+                        <span class="msg-meta-val">
+                            <a href="mailto:@Model.Email" style="color:var(--accent);text-decoration:none;">@Model.Email</a>
+                        </span>
+                    </div>
+                    <div class="msg-meta-row">
+                        <span class="msg-meta-key">Konu</span>
+                        <span class="msg-meta-val"><strong>@Model.Subject</strong></span>
+                    </div>
+                </div>
+
+                <div class="msg-divider"></div>
+                <p class="msg-body-label">// Mesaj İçeriği</p>
+                <div class="msg-body-text">@Model.Description</div>
+
+                @if (Model.IsRead == "Okundu")
+                {
+                    <span class="msg-status-chip chip-read">
+                        <i class="bi bi-check-circle-fill" style="font-size:.7rem"></i> Okundu
+                    </span>
+                }
+                else
+                {
+                    <span class="msg-status-chip chip-unread">
+                        <i class="bi bi-circle-fill" style="font-size:.45rem"></i> Okunmadı
+                    </span>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="md-card">
+            <div class="md-card-header">
+                <div class="md-card-icon"><i class="bi bi-reply-fill"></i></div>
+                <span class="md-card-title">// Yanıtla</span>
+            </div>
+            <div class="md-card-body">
+                <div asp-validation-summary="ModelOnly" class="validation-summary">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+                    </div>
+                </div>
+                <form method="post" action="/AdminMessage/SendMessageMail">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="MessageId" value="@Model.MessageId" />
+
+                    <div class="md-field">
+                        <label class="md-label" for="ToEmail">
+                            <i class="bi bi-person-fill" style="color:var(--accent)"></i> Kime
+                        </label>
+                        <input type="email" class="md-input" id="ToEmail"
+                               name="Email" value="@Model.Email" readonly />
+                    </div>
+
+                    <div class="md-field">
+                        <label class="md-label" for="ReplySubject">
+                            <i class="bi bi-tag-fill" style="color:var(--accent)"></i> Konu
+                        </label>
+                        <input type="text" class="md-input" id="ReplySubject"
+                               name="Subject" value="RE: @Model.Subject" />
+                    </div>
+
+                    <div class="ai-thinking" id="aiThinking">
+                        <div class="ai-thinking-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span>AI yanıt oluşturuyor...</span>
+                    </div>
+
+                    <div class="md-field">
+                        <label class="md-label" for="ReplyBody">
+                            <i class="bi bi-chat-text-fill" style="color:var(--accent)"></i> Yanıt Metni
+                        </label>
+                        <textarea class="md-textarea" id="ReplyBody"
+                                  name="Body" rows="10"
+                                  placeholder="Yanıtınızı buraya yazın veya AI ile otomatik oluşturun..."></textarea>
+                    </div>
+
+                    <div class="reply-actions">
+                        <button type="submit" class="btn-send" id="sendBtn">
+                            <i class="bi bi-send-fill"></i> Mail Gönder
+                        </button>
+
+                        <button type="button" class="btn-ai" id="aiBtn">
+                            <span class="ai-spinner"></span>
+                            <i class="bi bi-stars ai-icon"></i>
+                            <span class="ai-label">AI ile Yanıt Oluştur</span>
+                        </button>
+
+                        <a href="/AdminMessage/MessageList" class="btn-back">
+                            <i class="bi bi-arrow-left"></i> Vazgeç
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

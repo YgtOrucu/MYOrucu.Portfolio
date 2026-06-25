@@ -1,0 +1,113 @@
+﻿@model CreateExperienceDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yeni Deneyim Ekle";
+    ViewData["AdminSection"] = "Deneyimler";
+}
+
+<nav class="ec-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminExperience/ExperienceList"><i class="bi bi-briefcase-fill"></i> Deneyimler</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>Yeni Ekle</span>
+</nav>
+
+<div class="ec-header">
+    <h1 class="ec-title">Yeni Deneyim Ekle</h1>
+    <p class="ec-subtitle">// experience/create &mdash; yeni kayıt oluştur</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post" action="/AdminExperience/ExperienceCreate">
+    @Html.AntiForgeryToken()
+
+    <div class="ec-card">
+        <div class="ec-card-header">
+            <div class="ec-card-icon"><i class="bi bi-building"></i></div>
+            <span class="ec-card-title">// Temel Bilgiler</span>
+        </div>
+        <div class="ec-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="ec-field">
+                        <label class="ec-label" for="Company">Şirket Adı</label>
+                        <input type="text" class="ec-input" id="Company" name="Company"
+                               placeholder="TechCorp A.Ş." required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ec-field">
+                        <label class="ec-label" for="Title">Pozisyon / Unvan</label>
+                        <input type="text" class="ec-input" id="Title" name="Title"
+                               placeholder="Senior .NET Developer" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ec-field">
+                        <label class="ec-label" for="Date">Tarih Aralığı</label>
+                        <input type="text" class="ec-input" id="Date" name="Date"
+                               placeholder="Mar 2022 — Günümüz" />
+                        <span class="ec-hint">Serbest metin — örn: "Oca 2020 — Mar 2022" veya "2023 — Günümüz"</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ec-field">
+                        <label class="ec-label" for="WorkMethod">Çalışma Şekli</label>
+                        <input type="text" class="ec-input" id="WorkMethod" name="WorkMethod"
+                               placeholder="Ofis / Uzaktan / Hibrit" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ec-card">
+        <div class="ec-card-header">
+            <div class="ec-card-icon"><i class="bi bi-card-text"></i></div>
+            <span class="ec-card-title">// Açıklama &amp; Başarılar</span>
+        </div>
+        <div class="ec-card-body">
+            <span class="ec-hint" style="display:block;margin-bottom:.8rem;">
+                Her madde ayrı bir başarı veya sorumluluk satırı olarak gösterilecek.
+            </span>
+            <div class="dyn-list" id="descriptionList"></div>
+            <button type="button" class="btn-dyn-add" id="addDescription">
+                <i class="bi bi-plus-lg"></i> Yeni Madde Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="ec-card">
+        <div class="ec-card-header">
+            <div class="ec-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="ec-card-title">// Kullanılan Teknolojiler</span>
+        </div>
+        <div class="ec-card-body">
+            <span class="ec-hint" style="display:block;margin-bottom:.8rem;">
+                Her alan bir teknoloji etiketi olarak kart üzerinde gösterilecek.
+                Örn: <code style="color:var(--accent)">.NET 8</code>, <code style="color:var(--accent)">Azure</code>
+            </span>
+            <div class="dyn-list" id="techList"></div>
+            <button type="button" class="btn-dyn-add" id="addTech">
+                <i class="bi bi-plus-lg"></i> Teknoloji Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="ec-card">
+        <div class="ec-card-body">
+            <div class="ec-form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-floppy"></i> Kaydet
+                </button>
+                <a href="/AdminExperience/ExperienceList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

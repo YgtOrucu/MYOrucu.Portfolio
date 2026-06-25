@@ -1,0 +1,12 @@
+﻿<section id="contact">
+    <div class="container">
+        <p class="section-label">05 / İletişim</p>
+        <h2 class="section-title">Birlikte Çalışalım</h2>
+        <p class="section-sub">Yeni bir proje mi planlıyorsunuz? Ya da sadece merhaba demek mi istiyorsunuz? Mesajınızı bekliyorum.</p>
+        <div class="section-divider"></div>
+        <div class="row gy-4">
+            @await Html.PartialAsync("~/Views/MuhsinYigitOrucu/SendMessage.cshtml")
+            @await Component.InvokeAsync("MYOrucuLayoutContactInfo")
+        </div>
+    </div>
+</section>

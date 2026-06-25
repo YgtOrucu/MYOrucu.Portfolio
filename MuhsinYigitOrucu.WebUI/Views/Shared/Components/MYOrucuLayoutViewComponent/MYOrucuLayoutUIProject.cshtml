@@ -1,0 +1,66 @@
+﻿@model List<GetForProjectSection>
+
+<section id="projects">
+    <div class="container">
+        <p class="section-label">Projeler</p>
+        <h2 class="section-title">Tüm Projelerim</h2>
+        <div class="section-divider"></div>
+
+        <div class="row g-3">
+            @foreach (var project in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="project-card">
+
+                        <div class="project-img-wrap">
+                            <img src="@project.ImageUrl"
+                                 alt="@project.Title"
+                                 loading="lazy"
+                                 onerror="this.parentElement.classList.add('img-error')" />
+                            <div class="project-img-fallback">
+                                <i class="bi bi-display"></i>
+                            </div>
+                        </div>
+
+                        <div class="project-body">
+
+                            <h3 class="project-name">@project.Title</h3>
+                            <p class="project-desc">@project.MiniDescription</p>
+
+                            @{
+                                var techs = project.UseTechnology ?? new List<string>();
+                                var visible = techs.Take(4).ToList();
+                                var remaining = techs.Count - visible.Count;
+                            }
+                            <div class="tech-chips">
+                                @foreach (var tech in visible)
+                                {
+                                    <span class="tech-chip">@tech</span>
+                                }
+                                @if (remaining > 0)
+                                {
+                                    <span class="tech-chip tech-chip-more">+@remaining</span>
+                                }
+                            </div>
+
+                            <div class="project-actions">
+                                <a href="@project.GithubLink"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="proj-btn proj-btn-ghost">
+                                    <i class="bi bi-github"></i> GitHub
+                                </a>
+                                <a href="/Project/ProjectDetails/@project.ProjectId"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="proj-btn proj-btn-filled">
+                                    <i class="bi bi-box-arrow-up-right"></i> Ayrıntılar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

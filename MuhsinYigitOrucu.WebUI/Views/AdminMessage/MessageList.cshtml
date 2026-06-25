@@ -1,0 +1,105 @@
+﻿@model List<MessageListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Gelen Mesajlar";
+    ViewData["AdminSection"] = "Gelen Mesajlar";
+}
+
+@{
+    int totalCount = Model.Count;
+    int unreadCount = Model.Where(m => m.IsRead == "Okunmadı").Count();
+    int readCount = Model.Where(m => m.IsRead == "Okundu").Count();
+    int count = 0;
+}
+
+<div class="ml-header">
+    <div>
+        <h1 class="ml-title">Gelen Mesajlar</h1>
+        <p class="ml-subtitle">// messages &mdash; gelen kutusu yönetimi</p>
+    </div>
+    <div class="ml-stats">
+        <span class="ml-stat-chip ml-stat-total">
+            <i class="bi bi-envelope"></i> @totalCount Toplam
+        </span>
+        <span class="ml-stat-chip ml-stat-unread">
+            <i class="bi bi-circle-fill" style="font-size:.45rem"></i> @unreadCount Okunmadı
+        </span>
+        <span class="ml-stat-chip ml-stat-read">
+            <i class="bi bi-check-circle-fill" style="font-size:.7rem"></i> @readCount Okundu
+        </span>
+    </div>
+</div>
+
+<div class="ml-card">
+    <div class="ml-card-header">
+        <div class="ml-card-icon"><i class="bi bi-inbox-fill"></i></div>
+        <span class="ml-card-title">Mesaj Listesi</span>
+        <span class="ml-count-badge">@totalCount mesaj</span>
+    </div>
+
+    <div class="ml-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="ml-empty">
+                <i class="bi bi-inbox"></i>
+                <p>Gelen kutunuz boş. Henüz mesaj yok.</p>
+            </div>
+        }
+        else
+        {
+            <table class="ml-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px">#</th>
+                        <th style="width:185px">Ad Soyad</th>
+                        <th style="width:210px">E-posta</th>
+                        <th>Konu</th>
+                        <th style="width:115px">Durum</th>
+                        <th style="width:110px; text-align:right">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr class="@(item.IsRead == "Okunmadı" ? "unread-row" : "")">
+                            <td><span class="cell-mono">@count</span></td>
+                            <td>
+                                <span class="cell-name">
+                                    @if (item.IsRead == "Okunmadı")
+                                    {
+                                        <i class="bi bi-dot" style="color:var(--accent);font-size:1.1rem;vertical-align:middle;margin-right:.1rem"></i>
+                                    }
+                                    @item.NameSurname
+                                </span>
+                            </td>
+                            <td><span class="cell-email">@item.Email</span></td>
+                            <td>
+                                <span class="cell-subject" title="@item.Subject">@item.Subject</span>
+                            </td>
+                            <td>
+                                @if (item.IsRead == "Okundu")
+                                {
+                                    <span class="read-badge badge-read">
+                                        <span class="read-dot"></span> Okundu
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="read-badge badge-unread">
+                                        <span class="read-dot"></span> Okunmadı
+                                    </span>
+                                }
+                            </td>
+                            <td style="text-align:right">
+                                <a href="/AdminMessage/MessageDetails/@item.MessageId" class="btn-detail">
+                                    <i class="bi bi-eye"></i> Ayrıntılar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

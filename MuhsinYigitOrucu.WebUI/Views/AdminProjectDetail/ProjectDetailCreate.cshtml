@@ -1,0 +1,256 @@
+﻿@model CreateProjectDetailsDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yeni Proje Detayı";
+    ViewData["AdminSection"] = "Proje Detayları";
+}
+
+<nav class="pdc-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminProjectDetail/ProjectDetailList"><i class="bi bi-layout-text-sidebar-reverse"></i> Proje Detayları</a>
+    <i class="bi bi-chevron-right" style="font-size:.6rem"></i>
+    <span>Yeni Ekle</span>
+</nav>
+
+<div class="pdc-header">
+    <h1 class="pdc-title">Yeni Proje Detayı</h1>
+    <p class="pdc-subtitle">// project-details/create &mdash; detay sayfası oluştur</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post" action="/AdminProjectDetail/ProjectDetailCreate" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-info-circle"></i></div>
+            <span class="pdc-card-title">// Temel Bilgiler</span>
+        </div>
+        <div class="pdc-card-body">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Title">Proje Adı</label>
+                        <input type="text" class="pdc-input" id="Title" name="Title"
+                               placeholder="CloudShop Platform" required />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="ShortDescription">Kısa Açıklama (Tagline)</label>
+                        <input type="text" class="pdc-input" id="ShortDescription" name="ShortDescription"
+                               placeholder="Projeyi özetleyen etkileyici bir cümle..." />
+                        <span class="pdc-hint">Hero alanında proje başlığının altında gösterilir.</span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="FullDescription">Tam Açıklama</label>
+                        <textarea class="pdc-textarea" id="FullDescription" name="FullDescription"
+                                  rows="6"
+                                  placeholder="Her satır ayrı bir paragraf olarak render edilecek..."></textarea>
+                        <span class="pdc-hint">Her yeni satır (\n) sayfada ayrı paragraf olarak gösterilir.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-sliders"></i></div>
+            <span class="pdc-card-title">// Meta Bilgiler</span>
+        </div>
+        <div class="pdc-card-body">
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="ProjectId">
+                            <i class="bi bi-grid-1x2-fill" style="color:var(--accent)"></i> Proje Seçimi
+                        </label>
+                        <select class="pdc-select" id="ProjectId" name="ProjectId" required>
+                            <option value="" disabled selected>Proje seçiniz...</option>
+                            @foreach (var item in ViewBag.ProjectList)
+                            {
+                                <option value="@item.ProjectId">@item.Title</option>
+                            }
+                        </select>
+                        <span class="pdc-hint">Bu detay sayfasının bağlanacağı proje.</span>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Category">Kategori</label>
+                        <input type="text" class="pdc-input" id="Category" name="Category"
+                               placeholder="Web Uygulaması, API, Mobil..." />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Status">Durum</label>
+                        <select class="pdc-select" id="Status" name="Status">
+                            <option value="" disabled selected>Seçiniz...</option>
+                            <option value="Tamamlandı">Tamamlandı</option>
+                            <option value="Devam Ediyor">Devam Ediyor</option>
+                            <option value="Durduruldu">Durduruldu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Year">Yıl</label>
+                        <input type="text" class="pdc-input" id="Year" name="Year"
+                               placeholder="2024" maxlength="4" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Duration">Süre</label>
+                        <input type="text" class="pdc-input" id="Duration" name="Duration"
+                               placeholder="3 Ay" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="Role">Rol</label>
+                        <input type="text" class="pdc-input" id="Role" name="Role"
+                               placeholder="Full-Stack Developer" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="TeamSize">Ekip Büyüklüğü</label>
+                        <input type="text" class="pdc-input" id="TeamSize" name="TeamSize"
+                               placeholder="Solo / 3 Kişi" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="GithubLink">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub Linki
+                        </label>
+                        <input type="url" class="pdc-input" id="GithubLink" name="GithubLink"
+                               placeholder="https://github.com/kullanici/proje" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pdc-field">
+                        <label class="pdc-label" for="LiveDemoUrl">
+                            <i class="bi bi-box-arrow-up-right" style="color:var(--accent)"></i> Canlı Demo URL
+                        </label>
+                        <input type="url" class="pdc-input" id="LiveDemoUrl" name="LiveDemoUrl"
+                               placeholder="https://proje.example.com" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-images"></i></div>
+            <span class="pdc-card-title">// Görseller</span>
+        </div>
+        <div class="pdc-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="pdc-label">Kapak Görseli</label>
+                    <div class="file-zone">
+                        <div class="file-zone-selected" id="coverFileInfo">
+                            <i class="bi bi-file-earmark-image"></i>
+                            <span id="coverFileName">—</span>
+                        </div>
+                        <input type="file" name="CoverImageFile" accept="image/*"
+                               aria-label="Kapak görseli seç" />
+                        <i class="bi bi-image file-zone-icon"></i>
+                        <p class="file-zone-text"><strong>Tıkla</strong> veya sürükle</p>
+                        <p class="file-zone-hint">Hero arka planı · PNG, JPG, WEBP</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="pdc-label">Galeri Görselleri</label>
+                    <div class="file-zone">
+                        <div class="file-zone-selected" id="galleryFileInfo">
+                            <i class="bi bi-images"></i>
+                            <span id="galleryFileName">—</span>
+                            <span class="fz-count" id="galleryFileCount"></span>
+                        </div>
+                        <input type="file" name="GalleryImageFile" accept="image/*"
+                               multiple aria-label="Galeri görselleri seç" />
+                        <i class="bi bi-grid-3x3-gap file-zone-icon"></i>
+                        <p class="file-zone-text"><strong>Birden fazla</strong> seçilebilir</p>
+                        <p class="file-zone-hint">Ekran görüntüleri · CTRL ile çoklu seçim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="pdc-card-title">// Kullanılan Teknolojiler</span>
+        </div>
+        <div class="pdc-card-body">
+            <span class="pdc-hint" style="display:block;margin-bottom:.8rem;">
+                Her satır detay sayfasında bir teknoloji chip'i olarak gösterilecek.
+            </span>
+            <div class="dyn-list" id="techList"></div>
+            <button type="button" class="btn-dyn-add" id="addTech">
+                <i class="bi bi-plus-lg"></i> Teknoloji Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-stars"></i></div>
+            <span class="pdc-card-title">// Temel Özellikler</span>
+        </div>
+        <div class="pdc-card-body">
+            <span class="pdc-hint" style="display:block;margin-bottom:.8rem;">
+                Her satır "▹" işaretçisiyle özellik listesinde görünür.
+            </span>
+            <div class="dyn-list" id="featureList"></div>
+            <button type="button" class="btn-dyn-add" id="addFeature">
+                <i class="bi bi-plus-lg"></i> Özellik Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-header">
+            <div class="pdc-card-icon"><i class="bi bi-cpu"></i></div>
+            <span class="pdc-card-title">// Teknik Zorluklar &amp; Çözümler</span>
+        </div>
+        <div class="pdc-card-body">
+            <span class="pdc-hint" style="display:block;margin-bottom:.8rem;">
+                Projedeki teknik zorluklar ve nasıl çözüldükleri.
+            </span>
+            <div class="dyn-list" id="challengeList"></div>
+            <button type="button" class="btn-dyn-add" id="addChallenge">
+                <i class="bi bi-plus-lg"></i> Zorluk Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdc-card">
+        <div class="pdc-card-body">
+            <div class="pdc-form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-floppy"></i> Kaydet
+                </button>
+                <a href="/AdminProjectDetail/ProjectDetailList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,29 @@
+﻿@model GetForFooterSection
+<nav class="navbar navbar-expand-lg" id="mainNavbar">
+    <div class="container">
+        <a class="navbar-brand" href="/MuhsinYigitOrucu/Index#hero">
+            @Model.BrandInitials<span>.</span>
+        </a>
+
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center">
+            <ul class="navbar-nav gap-1">
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#hero">Ana Sayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#about">Hakkımda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#experience">Deneyim</a></li>
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#skills">Yetenekler</a></li>
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#projects">Projeler</a></li>
+                <li class="nav-item"><a class="nav-link" href="/MuhsinYigitOrucu/Index#contact">İletişim</a></li>
+            </ul>
+        </div>
+
+        <div class="d-none d-lg-flex ms-3">
+            <button class="btn-admin" data-bs-toggle="modal" data-bs-target="#adminLoginModal">
+                <i class="bi bi-shield-lock me-1"></i> Admin
+            </button>
+        </div>
+    </div>
+</nav>

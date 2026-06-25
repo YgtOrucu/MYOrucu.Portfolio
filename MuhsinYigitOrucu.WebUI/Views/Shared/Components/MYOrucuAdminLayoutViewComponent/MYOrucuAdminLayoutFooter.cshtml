@@ -1,0 +1,8 @@
+﻿<footer id="adminFooter" role="contentinfo">
+    <span class="footer-copy">
+        Admin Dashboard &mdash; &copy; <span>@DateTime.Now.Year</span>
+    </span>
+    <span class="footer-built">
+        Geliştirici <a href="/" target="_blank" rel="noopener">@(User.FindFirst("FullName")?.Value ?? "Geliştirici")</a>
+    </span>
+</footer>

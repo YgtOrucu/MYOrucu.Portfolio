@@ -1,0 +1,88 @@
+﻿@model CreateSkillsDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yeni Yetenek Kategorisi";
+    ViewData["AdminSection"] = "Yetenekler";
+}
+
+<nav class="sc-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminSkill/SkillList"><i class="bi bi-code-slash"></i> Yetenekler</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>Yeni Kategori</span>
+</nav>
+
+<div class="sc-header">
+    <h1 class="sc-title">Yeni Yetenek Kategorisi</h1>
+    <p class="sc-subtitle">// skills/create &mdash; yeni kategori ve yetenekler ekle</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post" action="/AdminSkill/SkillCreate">
+    @Html.AntiForgeryToken()
+
+    <div class="sc-card">
+        <div class="sc-card-header">
+            <div class="sc-card-icon"><i class="bi bi-folder2-open"></i></div>
+            <span class="sc-card-title">// Kategori Bilgisi</span>
+        </div>
+        <div class="sc-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="sc-field">
+                        <label class="sc-label" for="CategoryName">Kategori Adı</label>
+                        <input type="text" class="sc-input" id="CategoryName" name="CategoryName"
+                               placeholder="Backend, Frontend, DevOps..." required />
+                        <span class="sc-hint">Yetenek grubunun başlığı olarak gösterilecek.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sc-card">
+        <div class="sc-card-header">
+            <div class="sc-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="sc-card-title">// Yetenek Öğeleri (SkillItem)</span>
+        </div>
+        <div class="sc-card-body">
+            <p class="sc-hint" style="margin-bottom:1rem;">
+                Her satır bir yetenek öğesidir.
+                <strong style="color:var(--text-secondary)">Yetenek Adı</strong> zorunludur.
+                <strong style="color:var(--text-secondary)">Bootstrap Icon Sınıfı</strong> isteğe bağlıdır
+                (örn: <code style="color:var(--accent)">bi bi-server</code>,
+                <code style="color:var(--accent)">bi bi-database</code>).
+            </p>
+
+            <div class="dyn-header">
+                <span class="dyn-col-label">Yetenek Adı (Key)</span>
+                <span class="dyn-col-label">İkon Sınıfı (Value)</span>
+                <span></span>
+            </div>
+
+            <div class="dyn-list" id="skillItemList">
+            </div>
+
+            <button type="button" class="btn-dyn-add" id="addSkillItem">
+                <i class="bi bi-plus-lg"></i> Yeni Yetenek Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="sc-card">
+        <div class="sc-card-body">
+            <div class="sc-form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-floppy"></i> Kaydet
+                </button>
+                <a href="/AdminSkill/SkillList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

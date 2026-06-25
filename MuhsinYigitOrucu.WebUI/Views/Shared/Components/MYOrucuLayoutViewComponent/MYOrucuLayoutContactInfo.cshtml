@@ -1,0 +1,36 @@
+﻿@model GetForContactInfoSection
+
+<div class="col-lg-5">
+    <div class="contact-info-wrap">
+        <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+                <div class="contact-info-label">E-posta</div>
+                <div class="contact-info-val">@Model.EmailAddress</div>
+            </div>
+        </div>
+        <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-telephone"></i></div>
+            <div>
+                <div class="contact-info-label">Telefon</div>
+                <div class="contact-info-val">@Model.PhoneNumber</div>
+            </div>
+        </div>
+        <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-geo-alt"></i></div>
+            <div>
+                <div class="contact-info-label">Konum</div>
+                <div class="contact-info-val">@Model.Location</div>
+            </div>
+        </div>
+        <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-linkedin"></i></div>
+            <div>
+                <div class="contact-info-label">LinkedIn</div>
+                <div class="contact-info-val">
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">Profili Görüntüle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model GetForAboutSection
+<section id="about">
+    <div class="container">
+        <p class="section-label">01 / Hakkımda</p>
+        <h2 class="section-title">Ben Kimim?</h2>
+        <div class="section-divider"></div>
+
+        <div class="row gy-4">
+            <div class="col-lg-7">
+                <div class="about-card">
+                    <div class="about-bio">
+                        @foreach (var paragraph in Model.BioParagraphs)
+                        {
+                            <p>@paragraph</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="info-card">
+                    <div class="info-card-title">// Hızlı Bilgiler</div>
+                    @foreach (var info in Model.QuickInfo)
+                    {
+                        <div class="info-row">
+                            <span class="info-row-key">@info.Key</span>
+                            <span class="info-row-val">@info.Value</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

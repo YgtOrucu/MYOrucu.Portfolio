@@ -1,0 +1,145 @@
+﻿@model List<ProjectListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Projeler";
+    ViewData["AdminSection"] = "Projeler";
+    int count = 0;
+}
+
+<div class="pl-header">
+    <div>
+        <h1 class="pl-title">Projeler</h1>
+        <p class="pl-subtitle">// projects &mdash; proje portföyü yönetimi</p>
+    </div>
+    <a href="/AdminProject/ProjectCreate" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Proje Ekle
+    </a>
+</div>
+
+<div class="pl-card">
+    <div class="pl-card-header">
+        <div class="pl-card-icon"><i class="bi bi-grid-1x2-fill"></i></div>
+        <span class="pl-card-title">Proje Listesi</span>
+        <span class="pl-count-badge">@Model.Count proje</span>
+    </div>
+
+    <div class="pl-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="pl-empty">
+                <i class="bi bi-grid"></i>
+                <p>Henüz proje eklenmemiş. "Yeni Proje Ekle" ile başlayın.</p>
+            </div>
+        }
+        else
+        {
+            <table class="pl-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px">#</th>
+                        <th style="width:70px">Görsel</th>
+                        <th style="width:180px">Proje Adı</th>
+                        <th style="width:210px">Kısa Açıklama</th>
+                        <th>Teknolojiler</th>
+                        <th style="width:170px">GitHub</th>
+                        <th style="width:60px; text-align:center">Anasayfa</th>
+                        <th style="width:165px; text-align:right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><span class="cell-mono">@count</span></td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl"
+                                         alt="@item.Title"
+                                         class="proj-thumb"
+                                         loading="lazy"
+                                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                                    <div class="proj-thumb-placeholder" style="display:none">
+                                        <i class="bi bi-image"></i>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="proj-thumb-placeholder">
+                                        <i class="bi bi-image"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                <span class="cell-title" title="@item.Title">@item.Title</span>
+                            </td>
+                            <td>
+                                <span class="cell-desc" title="@item.MiniDescription">@item.MiniDescription</span>
+                            </td>
+                            <td>
+                                @if (item.UseTechnology != null && item.UseTechnology.Any())
+                                {
+                                    <div class="tech-badges">
+                                        @foreach (var tech in item.UseTechnology)
+                                        {
+                                            <span class="tech-badge">@tech</span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="tech-badge-empty">— yok —</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(item.GithubLink))
+                                {
+                                    <a href="@item.GithubLink"
+                                       target="_blank"
+                                       rel="noopener"
+                                       class="github-link"
+                                       title="@item.GithubLink">
+                                        <i class="bi bi-github"></i>
+                                        GitHub
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="github-link-empty">—</span>
+                                }
+                            </td>
+                            <td style="text-align:center">
+                                @if (item.ShowOnHomePage)
+                                {
+                                    <span class="badge-onhome" title="Anasayfada gösteriliyor">
+                                        <i class="bi bi-house-check-fill"></i>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-offhome" title="Anasayfada gösterilmiyor">
+                                        <i class="bi bi-house"></i>
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-cell">
+                                    <a href="/AdminProject/ProjectUpdate?id=@item.ProjectId"
+                                       class="btn-edit">
+                                        <i class="bi bi-pencil"></i> Düzenle
+                                    </a>
+                                    <a href="/AdminProject/ProjectDelete?id=@item.ProjectId"
+                                       class="btn-delete"
+                                       onclick="return confirm('Bu projeyi silmek istediğinize emin misiniz?')">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

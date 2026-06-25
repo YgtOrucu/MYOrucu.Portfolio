@@ -1,0 +1,6 @@
+@MuhsinYigitOrucu.WebApi_HostAddress = http://localhost:5194
+
+GET {{MuhsinYigitOrucu.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,237 @@
+﻿@model AboutUpdateDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Hakkımda Güncelle";
+    ViewData["AdminSection"] = "Hakkımda";
+}
+
+<nav class="au-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminAbout/AboutList"><i class="bi bi-person-lines-fill"></i> Hakkımda</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Güncelle &mdash; #@Model.AboutId</span>
+</nav>
+
+<div class="au-header">
+    <h1 class="au-title">Hakkımda Bilgisini Güncelle</h1>
+    <p class="au-subtitle">// about/update &mdash; mevcut kaydı düzenle</p>
+</div>
+
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+
+<form method="post" action="/AdminAbout/AboutUpdate" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.AboutId)
+    @Html.HiddenFor(x => x.AvatarUrl)
+
+    <div class="au-card">
+        <div class="au-card-header">
+            <div class="au-card-icon"><i class="bi bi-person"></i></div>
+            <span class="au-card-title">// Temel Bilgiler</span>
+            <span class="au-id-chip">ID: @Model.AboutId</span>
+        </div>
+        <div class="au-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="au-field">
+                        <label class="au-label" for="FullName">Ad Soyad</label>
+                        <input type="text" class="au-input" id="FullName" name="FullName"
+                               value="@Model.FullName" placeholder="Ahmet Yılmaz" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="au-field">
+                        <label class="au-label" for="BrandInitials">Marka Kısaltması</label>
+                        <input type="text" class="au-input" id="BrandInitials" name="BrandInitials"
+                               value="@Model.BrandInitials" placeholder="AY" maxlength="5" />
+                        <span class="au-hint">Navbar'da görünecek 2-3 karakter</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="au-field">
+                        <label class="au-label" for="Location">Konum</label>
+                        <input type="text" class="au-input" id="Location" name="Location"
+                               value="@Model.Location" placeholder="İstanbul, TR" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="au-field">
+                        <label class="au-label" for="EmailAddress">E-posta Adresi</label>
+                        <input type="email" class="au-input" id="EmailAddress" name="EmailAddress"
+                               value="@Model.EmailAddress" placeholder="ahmet@example.com" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="au-field">
+                        <label class="au-label" for="PhoneNumber">Telefon</label>
+                        <input type="text" class="au-input" id="PhoneNumber" name="PhoneNumber"
+                               value="@Model.PhoneNumber" placeholder="+90 555 000 00 00" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="au-field">
+                        <label class="au-label" for="ShortBio">Kısa Bio (Hero Alanı)</label>
+                        <textarea class="au-textarea" id="ShortBio" name="ShortBio"
+                                  placeholder="Bir veya iki cümlelik özet tanıtım metni...">@Model.ShortBio</textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="au-field">
+                        <label class="au-label" for="FormFile">Avatar URL</label>
+                        <input type="file" class="au-input" id="FormFile" name="FormFile" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="au-card">
+        <div class="au-card-header">
+            <div class="au-card-icon"><i class="bi bi-share"></i></div>
+            <span class="au-card-title">// Sosyal Medya &amp; Linkler</span>
+        </div>
+        <div class="au-card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="au-field">
+                        <label class="au-label" for="GithubUrl">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub URL
+                        </label>
+                        <input type="url" class="au-input" id="GithubUrl" name="GithubUrl"
+                               value="@Model.GithubUrl" placeholder="https://github.com/kullanici" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="au-field">
+                        <label class="au-label" for="LinkedinUrl">
+                            <i class="bi bi-linkedin" style="color:var(--accent)"></i> LinkedIn URL
+                        </label>
+                        <input type="url" class="au-input" id="LinkedinUrl" name="LinkedinUrl"
+                               value="@Model.LinkedinUrl" placeholder="https://linkedin.com/in/kullanici" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="au-card">
+        <div class="au-card-header">
+            <div class="au-card-icon"><i class="bi bi-fonts"></i></div>
+            <span class="au-card-title">// Typewriter Başlıkları</span>
+        </div>
+        <div class="au-card-body">
+            <span class="au-hint" style="display:block;margin-bottom:.75rem;">
+                Hero alanındaki yazı yazma efektinde sırayla gösterilecek unvan metinleri.
+            </span>
+            <div class="dyn-list" id="typewriterList">
+                @if (Model.TypewriterTitles != null)
+                {
+                    for (int i = 0; i < Model.TypewriterTitles.Count; i++)
+                    {
+                        <div class="dyn-row" data-preloaded="true">
+                            <input type="text" class="au-input"
+                                   name="TypewriterTitles[@i]"
+                                   value="@Model.TypewriterTitles[i]"
+                                   placeholder="Senior .NET Developer" />
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addTypewriter">
+                <i class="bi bi-plus-lg"></i> Yeni Başlık Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="au-card">
+        <div class="au-card-header">
+            <div class="au-card-icon"><i class="bi bi-text-paragraph"></i></div>
+            <span class="au-card-title">// Biyografi Paragrafları</span>
+        </div>
+        <div class="au-card-body">
+            <span class="au-hint" style="display:block;margin-bottom:.75rem;">
+                "Hakkımda" bölümünde gösterilecek uzun biyografi paragrafları.
+            </span>
+            <div class="dyn-list" id="bioParagraphList">
+                @if (Model.BioParagraphs != null)
+                {
+                    for (int i = 0; i < Model.BioParagraphs.Count; i++)
+                    {
+                        <div class="dyn-row" data-preloaded="true">
+                            <textarea class="au-textarea"
+                                      name="BioParagraphs[@i]"
+                                      rows="3"
+                                      placeholder="Biyografi paragrafı...">@Model.BioParagraphs[i]</textarea>
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addBioParagraph">
+                <i class="bi bi-plus-lg"></i> Yeni Paragraf Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="au-card">
+        <div class="au-card-header">
+            <div class="au-card-icon"><i class="bi bi-list-check"></i></div>
+            <span class="au-card-title">// Hızlı Bilgi Satırları</span>
+        </div>
+        <div class="au-card-body">
+            <span class="au-hint" style="display:block;margin-bottom:.75rem;">
+                "Hakkımda" bölümündeki sağ kart için anahtar → değer çiftleri.
+                <br>Örn: <code style="color:var(--accent)">Deneyim</code> → <code style="color:var(--accent)">5+ Yıl</code>
+            </span>
+            <div class="dyn-list" id="quickInfoList">
+                @if (Model.QuickInfo != null)
+                {
+                    int qi = 0;
+                    foreach (var pair in Model.QuickInfo)
+                    {
+                        <div class="dyn-row" data-preloaded="true">
+                            <input type="text" class="au-input key-input"
+                                   name="QuickInfo[@qi].Key"
+                                   value="@pair.Key"
+                                   placeholder="Anahtar (örn: Deneyim)" />
+                            <input type="text" class="au-input"
+                                   name="QuickInfo[@qi].Value"
+                                   value="@pair.Value"
+                                   placeholder="Değer (örn: 5+ Yıl)" />
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                        qi++;
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addQuickInfo">
+                <i class="bi bi-plus-lg"></i> Yeni Satır Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="au-card">
+        <div class="au-card-body">
+            <div class="au-form-actions">
+                <button type="submit" class="btn-update">
+                    <i class="bi bi-arrow-repeat"></i> Güncelle
+                </button>
+                <a href="/AdminAbout/AboutList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,350 @@
+﻿@model UpdateProjectDetailsDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Proje Detayı Güncelle";
+    ViewData["AdminSection"] = "Proje Detayları";
+}
+
+<nav class="pdu-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminProjectDetail/ProjectDetailList"><i class="bi bi-layout-text-sidebar-reverse"></i> Proje Detayları</a>
+    <i class="bi bi-chevron-right" style="font-size:.6rem"></i>
+    <span>Güncelle &mdash; #@Model.ProjectId</span>
+</nav>
+
+<div class="pdu-header">
+    <h1 class="pdu-title">Proje Detayını Güncelle</h1>
+    <p class="pdu-subtitle">// project-details/update &mdash; mevcut detay sayfasını düzenle</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post" action="/AdminProjectDetail/ProjectDetailUpdate" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="CoverImageUrl" value="@Model.CoverImageUrl" />
+    <input type="hidden" name="ProjectDetailId" value="@Model.ProjectDetailId" />
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-info-circle"></i></div>
+            <span class="pdu-card-title">// Temel Bilgiler</span>
+            <span class="pdu-id-chip">ID: @Model.ProjectId</span>
+        </div>
+        <div class="pdu-card-body">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Title">Proje Adı</label>
+                        <input type="text" class="pdu-input" id="Title" name="Title"
+                               value="@Model.Title" placeholder="CloudShop Platform" required />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="ShortDescription">Kısa Açıklama (Tagline)</label>
+                        <input type="text" class="pdu-input" id="ShortDescription" name="ShortDescription"
+                               value="@Model.ShortDescription"
+                               placeholder="Projeyi özetleyen etkileyici bir cümle..." />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="FullDescription">Tam Açıklama</label>
+                        <textarea class="pdu-textarea" id="FullDescription" name="FullDescription"
+                                  rows="6"
+                                  placeholder="Her satır ayrı paragraf olarak render edilecek...">@Model.FullDescription</textarea>
+                        <span class="pdu-hint">Her yeni satır (\n) sayfada ayrı paragraf olarak gösterilir.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-sliders"></i></div>
+            <span class="pdu-card-title">// Meta Bilgiler</span>
+        </div>
+        <div class="pdu-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="ProjectSelectId">
+                            <i class="bi bi-grid-1x2-fill" style="color:var(--accent)"></i> Proje Seçimi
+                        </label>
+                        <select class="pdu-select" id="ProjectSelectId" name="ProjectId" required>
+                            <option value="" disabled>Proje seçiniz...</option>
+                            @foreach (var item in ViewBag.ProjectList)
+                            {
+                                <option 
+                                    value="@item.ProjectId">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span class="pdu-hint">Bağlı projeyi değiştirmek için seçiniz.</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Category">Kategori</label>
+                        <input type="text" class="pdu-input" id="Category" name="Category"
+                               value="@Model.Category" placeholder="Web Uygulaması..." />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Status">Durum</label>
+                        <select class="pdu-select" id="Status" name="Status">
+                            <option value="" disabled>Seçiniz...</option>
+                            <option value="Tamamlandı">Tamamlandı</option>
+                            <option value="Devam Ediyor">Devam Ediyor</option>
+                            <option value="Durduruldu">Durduruldu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Year">Yıl</label>
+                        <input type="text" class="pdu-input" id="Year" name="Year"
+                               value="@Model.Year" placeholder="2024" maxlength="4" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Duration">Süre</label>
+                        <input type="text" class="pdu-input" id="Duration" name="Duration"
+                               value="@Model.Duration" placeholder="3 Ay" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="Role">Rol</label>
+                        <input type="text" class="pdu-input" id="Role" name="Role"
+                               value="@Model.Role" placeholder="Full-Stack Developer" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="TeamSize">Ekip Büyüklüğü</label>
+                        <input type="text" class="pdu-input" id="TeamSize" name="TeamSize"
+                               value="@Model.TeamSize" placeholder="Solo / 3 Kişi" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="GithubLink">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub Linki
+                        </label>
+                        <input type="url" class="pdu-input" id="GithubLink" name="GithubLink"
+                               value="@Model.GithubLink" placeholder="https://github.com/..." />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pdu-field">
+                        <label class="pdu-label" for="LiveDemoUrl">
+                            <i class="bi bi-box-arrow-up-right" style="color:var(--accent)"></i> Canlı Demo URL
+                        </label>
+                        <input type="url" class="pdu-input" id="LiveDemoUrl" name="LiveDemoUrl"
+                               value="@Model.LiveDemoUrl" placeholder="https://proje.example.com" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-images"></i></div>
+            <span class="pdu-card-title">// Görseller</span>
+        </div>
+        <div class="pdu-card-body">
+
+            @{
+                bool hasCover = !string.IsNullOrWhiteSpace(Model.CoverImageUrl);
+                bool hasGallery = Model.GalleryImages != null && Model.GalleryImages.Any();
+            }
+            @if (hasCover || hasGallery)
+            {
+                <label class="pdu-label" style="margin-bottom:.6rem">Mevcut Görseller</label>
+                <div id="deletedImagesContainer"></div>
+
+                <div class="img-preview-grid">
+                    @if (hasCover)
+                    {
+                        <div class="img-thumb-card">
+                            <span class="cover-badge">KAPAK</span>
+                            <img src="@Model.CoverImageUrl" alt="Kapak görseli" onerror="this.style.opacity='.2'" />
+                        </div>
+                    }
+                    @if (hasGallery)
+                    {
+                        @for (int gi = 0; gi < Model.GalleryImages.Count; gi++)
+                        {
+                            <div class="img-thumb-card gallery-thumb" data-url="@Model.GalleryImages[gi]">
+
+                                <input type="hidden" class="gallery-keep-input" name="GalleryImages[@gi]" value="@Model.GalleryImages[gi]" />
+
+                                <img src="@Model.GalleryImages[gi]" alt="Galeri görseli" onerror="this.style.opacity='.2'" />
+                                <span class="img-thumb-label">galeri</span>
+
+                                <button type="button" class="btn-img-delete" title="Sil">
+                                    <i class="bi bi-trash3-fill"></i>
+                                </button>
+
+                                <div class="thumb-deleted-overlay">
+                                    <i class="bi bi-trash3-fill"></i>
+                                    <span>Silinecek</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+            <div class="row g-3" style="margin-top: 0.5rem;">
+                <div class="col-md-6">
+                    <label class="pdu-label">Yeni Kapak Görseli (Değiştir)</label>
+                    <div class="file-zone">
+                        <div class="file-zone-selected" id="coverFileInfo">
+                            <i class="bi bi-file-earmark-image"></i>
+                            <span id="coverFileName">—</span>
+                        </div>
+                        <input type="file" name="CoverImageFile" accept="image/*" aria-label="Yeni kapak görseli seç" />
+                        <i class="bi bi-image file-zone-icon"></i>
+                        <p class="file-zone-text"><strong>Tıkla</strong> veya sürükle</p>
+                        <p class="file-zone-hint">Mevcut kapağın yerini alır · PNG, JPG, WEBP</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="pdu-label">Yeni Galeri Görselleri (Üzerine Ekle)</label>
+                    <div class="file-zone">
+                        <div class="file-zone-selected" id="galleryFileInfo">
+                            <i class="bi bi-images"></i>
+                            <span id="galleryFileName">—</span>
+                            <span class="fz-count" id="galleryFileCount"></span>
+                        </div>
+                        <input type="file" name="GalleryImageFile" accept="image/*" multiple aria-label="Yeni galeri görselleri seç" />
+                        <i class="bi bi-grid-3x3-gap file-zone-icon"></i>
+                        <p class="file-zone-text"><strong>Birden fazla</strong> seçilebilir</p>
+                        <p class="file-zone-hint">CTRL ile çoklu seçim · PNG, JPG, WEBP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="pdu-card-title">// Kullanılan Teknolojiler</span>
+        </div>
+        <div class="pdu-card-body">
+            @if (Model.UseTechnology != null && Model.UseTechnology.Any())
+            {
+                <div class="existing-chip"><i class="bi bi-check-circle-fill"></i> @Model.UseTechnology.Count kayıt yüklendi</div>
+            }
+            <div class="dyn-list" id="techList">
+                @if (Model.UseTechnology != null)
+                {
+                    for (int i = 0; i < Model.UseTechnology.Count; i++)
+                    {
+                        <div class="dyn-row">
+                            <input type="text" class="pdu-input"
+                                   name="UseTechnology[@i]"
+                                   value="@Model.UseTechnology[i]"
+                                   placeholder=".NET 8 / React ..." />
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addTech">
+                <i class="bi bi-plus-lg"></i> Teknoloji Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-stars"></i></div>
+            <span class="pdu-card-title">// Temel Özellikler</span>
+        </div>
+        <div class="pdu-card-body">
+            @if (Model.Features != null && Model.Features.Any())
+            {
+                <div class="existing-chip"><i class="bi bi-check-circle-fill"></i> @Model.Features.Count kayıt yüklendi</div>
+            }
+            <div class="dyn-list" id="featureList">
+                @if (Model.Features != null)
+                {
+                    for (int i = 0; i < Model.Features.Count; i++)
+                    {
+                        <div class="dyn-row">
+                            <textarea class="pdu-input pdu-textarea" rows="2"
+                                      name="Features[@i]"
+                                      placeholder="Özellik açıklaması...">@Model.Features[i]</textarea>
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addFeature">
+                <i class="bi bi-plus-lg"></i> Özellik Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-header">
+            <div class="pdu-card-icon"><i class="bi bi-cpu"></i></div>
+            <span class="pdu-card-title">// Teknik Zorluklar &amp; Çözümler</span>
+        </div>
+        <div class="pdu-card-body">
+            @if (Model.Challenges != null && Model.Challenges.Any())
+            {
+                <div class="existing-chip"><i class="bi bi-check-circle-fill"></i> @Model.Challenges.Count kayıt yüklendi</div>
+            }
+            <div class="dyn-list" id="challengeList">
+                @if (Model.Challenges != null)
+                {
+                    for (int i = 0; i < Model.Challenges.Count; i++)
+                    {
+                        <div class="dyn-row">
+                            <textarea class="pdu-input pdu-textarea" rows="2"
+                                      name="Challenges[@i]"
+                                      placeholder="Zorluk & çözüm açıklaması...">@Model.Challenges[i]</textarea>
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <button type="button" class="btn-dyn-add" id="addChallenge">
+                <i class="bi bi-plus-lg"></i> Zorluk Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pdu-card">
+        <div class="pdu-card-body">
+            <div class="pdu-form-actions">
+                <button type="submit" class="btn-update">
+                    <i class="bi bi-arrow-repeat"></i> Güncelle
+                </button>
+                <a href="/AdminProjectDetail/ProjectDetailList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

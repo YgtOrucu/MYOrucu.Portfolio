@@ -1,0 +1,134 @@
+﻿@model CreateProjectDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yeni Proje Ekle";
+    ViewData["AdminSection"] = "Projeler";
+}
+
+
+<nav class="pc-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminProject/ProjectList"><i class="bi bi-grid-1x2-fill"></i> Projeler</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>Yeni Proje</span>
+</nav>
+
+<div class="pc-header">
+    <h1 class="pc-title">Yeni Proje Ekle</h1>
+    <p class="pc-subtitle">// projects/create &mdash; yeni proje kaydı oluştur</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post"
+      action="/AdminProject/ProjectCreate"
+      enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="pc-card">
+        <div class="pc-card-header">
+            <div class="pc-card-icon"><i class="bi bi-info-circle"></i></div>
+            <span class="pc-card-title">// Proje Bilgileri</span>
+        </div>
+        <div class="pc-card-body">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="pc-field">
+                        <label class="pc-label" for="Title">Proje Adı</label>
+                        <input type="text" class="pc-input" id="Title" name="Title"
+                               placeholder="CloudShop Platform" required />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="pc-field">
+                        <label class="pc-label" for="MiniDescription">Kısa Açıklama</label>
+                        <textarea class="pc-textarea" id="MiniDescription" name="MiniDescription"
+                                  rows="3"
+                                  placeholder="Projenin kısa ve etkileyici bir tanımı..."></textarea>
+                        <span class="pc-hint">Proje kartında görünecek özet metin.</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pc-field">
+                        <label class="pc-label" for="GithubLink">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub Linki
+                        </label>
+                        <input type="url" class="pc-input" id="GithubLink" name="GithubLink"
+                               placeholder="https://github.com/kullanici/proje" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pc-card">
+        <div class="pc-card-header">
+            <div class="pc-card-icon"><i class="bi bi-image"></i></div>
+            <span class="pc-card-title">// Proje Görseli</span>
+        </div>
+        <div class="pc-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="pc-field">
+                        <label class="pc-label" for="FormFile">Image Url</label>
+                        <input type="file" class="pc-input" id="FormFile" name="FormFile" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pc-card">
+        <div class="pc-card-header">
+            <div class="pc-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="pc-card-title">// Kullanılan Teknolojiler</span>
+        </div>
+        <div class="pc-card-body">
+            <span class="pc-hint" style="display:block;margin-bottom:.85rem;">
+                Her alan proje kartında bir teknoloji etiketi olarak gösterilecek.
+                Örn: <code style="color:var(--accent)">.NET 8</code>,
+                <code style="color:var(--accent)">React</code>,
+                <code style="color:var(--accent)">PostgreSQL</code>
+            </span>
+            <div class="dyn-list" id="techList">
+            </div>
+            <button type="button" class="btn-dyn-add" id="addTech">
+                <i class="bi bi-plus-lg"></i> Teknoloji Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="pc-card">
+        <div class="pc-card-header">
+            <div class="pc-card-icon"><i class="bi bi-house-door"></i></div>
+            <span class="pc-card-title">// Anasayfa Görünürlüğü</span>
+        </div>
+        <div class="pc-card-body">
+            <div class="pc-field">
+                <div class="form-check form-switch">
+                    <input asp-for="ShowOnHomePage" class="form-check-input" />
+                    <label asp-for="ShowOnHomePage" class="form-check-label">
+                        Bu proje anasayfada gösterilsin
+                    </label>
+                </div>
+                <span class="pc-hint">Aktif edilirse proje, anasayfadaki öne çıkan projeler bölümünde listelenir.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pc-card">
+        <div class="pc-card-body">
+            <div class="pc-form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-floppy"></i> Kaydet
+                </button>
+                <a href="/AdminProject/ProjectList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

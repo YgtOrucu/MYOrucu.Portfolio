@@ -1,0 +1,78 @@
+﻿<aside id="adminSidebar" aria-label="Yönetim menüsü">
+
+    <p class="sidebar-section-label">Yönetim</p>
+
+    <ul class="sidebar-nav" role="list">
+
+        <li role="listitem">
+            <a href="/AdminAbout/AboutList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Hakkımda" ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Hakkımda" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-person-lines-fill"></i></span>
+                <span class="nav-label">Hakkımda</span>
+            </a>
+        </li>
+
+        <li role="listitem">
+            <a href="/AdminExperience/ExperienceList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Deneyimler" ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Deneyimler" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-briefcase-fill"></i></span>
+                <span class="nav-label">Deneyimler</span>
+            </a>
+        </li>
+
+        <li role="listitem">
+            <a href="/AdminSkill/SkillList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Yetenekler" ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Yetenekler" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-code-slash"></i></span>
+                <span class="nav-label">Yetenekler</span>
+            </a>
+        </li>
+
+        <li role="listitem">
+            <a href="/AdminProject/ProjectList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Projeler" ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Projeler" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                <span class="nav-label">Projeler</span>
+            </a>
+        </li>
+
+        <li role="listitem">
+            <a href="/AdminProjectDetail/ProjectDetailList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Proje Detayları " ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Proje Detayları" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                <span class="nav-label">Proje Detayları</span>
+            </a>
+        </li>
+
+        <li role="listitem">
+            <a href="/AdminMessage/MessageList"
+               class="sidebar-link @(ViewData["AdminSection"]?.ToString() == "Mesajlar" ? "active" : "")"
+               aria-current="@(ViewData["AdminSection"]?.ToString() == "Mesajlar" ? "page" : null)">
+                <span class="nav-icon"><i class="bi bi-envelope-fill"></i></span>
+                <span class="nav-label">Gelen Mesajlar</span>
+                @if (ViewBag.UnreadMessageCount != null && (int)ViewBag.UnreadMessageCount > 0)
+                {
+                    <span class="sidebar-badge">@ViewBag.UnreadMessageCount</span>
+                }
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-footer-info">
+            <div class="sidebar-footer-icon"><i class="bi bi-person-fill"></i></div>
+            <div>
+                <div class="sidebar-footer-name">@(User.FindFirst("FullName")?.Value ?? "Admin")</div>
+                <div class="sidebar-footer-role">Yönetici</div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<div id="sidebarSpacer" aria-hidden="true"></div>

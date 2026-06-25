@@ -1,0 +1,182 @@
+﻿@model AboutCreateDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yeni Hakkımda Bilgisi";
+    ViewData["AdminSection"] = "Hakkımda";
+}
+
+<nav class="ac-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminAbout/AboutList"><i class="bi bi-person-lines-fill"></i> Hakkımda</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Yeni Ekle</span>
+</nav>
+
+<div class="ac-header">
+    <h1 class="ac-title">Yeni Hakkımda Bilgisi</h1>
+    <p class="ac-subtitle">// about/create &mdash; yeni kayıt oluştur</p>
+</div>
+
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+
+<form method="post" action="/AdminAbout/AboutCreate" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="ac-card">
+        <div class="ac-card-header">
+            <div class="ac-card-icon"><i class="bi bi-person"></i></div>
+            <span class="ac-card-title">// Temel Bilgiler</span>
+        </div>
+        <div class="ac-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="ac-field">
+                        <label class="ac-label" for="FullName">Ad Soyad</label>
+                        <input type="text" class="ac-input" id="FullName" name="FullName" placeholder="Ahmet Yılmaz" required />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ac-field">
+                        <label class="ac-label" for="BrandInitials">Marka Kısaltması</label>
+                        <input type="text" class="ac-input" id="BrandInitials" name="BrandInitials" placeholder="AY" maxlength="5" />
+                        <span class="ac-hint">Navbar'da görünecek 2-3 karakter</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ac-field">
+                        <label class="ac-label" for="Location">Konum</label>
+                        <input type="text" class="ac-input" id="Location" name="Location" placeholder="İstanbul, TR" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ac-field">
+                        <label class="ac-label" for="EmailAddress">E-posta Adresi</label>
+                        <input type="email" class="ac-input" id="EmailAddress" name="EmailAddress" placeholder="ahmet@example.com" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ac-field">
+                        <label class="ac-label" for="PhoneNumber">Telefon</label>
+                        <input type="text" class="ac-input" id="PhoneNumber" name="PhoneNumber" placeholder="+90 555 000 00 00" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="ac-field">
+                        <label class="ac-label" for="ShortBio">Kısa Bio (Hero Alanı)</label>
+                        <textarea class="ac-textarea" id="ShortBio" name="ShortBio" placeholder="Bir veya iki cümlelik özet tanıtım metni..."></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="ac-field">
+                        <label class="ac-label" for="FormFile">Avatar URL</label>
+                        <input type="file" class="ac-input" id="FormFile" name="FormFile" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ac-card">
+        <div class="ac-card-header">
+            <div class="ac-card-icon"><i class="bi bi-share"></i></div>
+            <span class="ac-card-title">// Sosyal Medya &amp; Linkler</span>
+        </div>
+        <div class="ac-card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="ac-field">
+                        <label class="ac-label" for="GithubUrl">
+                            <i class="bi bi-github" style="color:var(--accent)"></i> GitHub URL
+                        </label>
+                        <input type="url" class="ac-input" id="GithubUrl" name="GithubUrl" placeholder="https://github.com/kullanici" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ac-field">
+                        <label class="ac-label" for="LinkedinUrl">
+                            <i class="bi bi-linkedin" style="color:var(--accent)"></i> LinkedIn URL
+                        </label>
+                        <input type="url" class="ac-input" id="LinkedinUrl" name="LinkedinUrl" placeholder="https://linkedin.com/in/kullanici" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ac-field">
+                        <label class="ac-label" for="TwitterUrl">
+                            <i class="bi bi-twitter-x" style="color:var(--accent)"></i> Twitter/X URL
+                        </label>
+                        <input type="url" class="ac-input" id="TwitterUrl" name="TwitterUrl" placeholder="https://x.com/kullanici" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ac-card">
+        <div class="ac-card-header">
+            <div class="ac-card-icon"><i class="bi bi-fonts"></i></div>
+            <span class="ac-card-title">// Typewriter Başlıkları</span>
+        </div>
+        <div class="ac-card-body">
+            <span class="ac-hint" style="display:block;margin-bottom:.75rem;">
+                Hero alanındaki yazı yazma efektinde sırayla gösterilecek unvan metinleri.
+            </span>
+            <div class="dyn-list" id="typewriterList">
+            </div>
+            <button type="button" class="btn-dyn-add" id="addTypewriter">
+                <i class="bi bi-plus-lg"></i> Yeni Başlık Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="ac-card">
+        <div class="ac-card-header">
+            <div class="ac-card-icon"><i class="bi bi-text-paragraph"></i></div>
+            <span class="ac-card-title">// Biyografi Paragrafları</span>
+        </div>
+        <div class="ac-card-body">
+            <span class="ac-hint" style="display:block;margin-bottom:.75rem;">
+                "Hakkımda" bölümünde gösterilecek uzun biyografi paragrafları.
+            </span>
+            <div class="dyn-list" id="bioParagraphList">
+            </div>
+            <button type="button" class="btn-dyn-add" id="addBioParagraph">
+                <i class="bi bi-plus-lg"></i> Yeni Paragraf Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="ac-card">
+        <div class="ac-card-header">
+            <div class="ac-card-icon"><i class="bi bi-list-check"></i></div>
+            <span class="ac-card-title">// Hızlı Bilgi Satırları</span>
+        </div>
+        <div class="ac-card-body">
+            <span class="ac-hint" style="display:block;margin-bottom:.75rem;">
+                "Hakkımda" bölümündeki sağ kart için anahtar → değer çiftleri.
+                <br>Örn: <code style="color:var(--accent)">Deneyim</code> → <code style="color:var(--accent)">5+ Yıl</code>
+            </span>
+            <div class="dyn-list" id="quickInfoList">
+            </div>
+            <button type="button" class="btn-dyn-add" id="addQuickInfo">
+                <i class="bi bi-plus-lg"></i> Yeni Satır Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="ac-card">
+        <div class="ac-card-body">
+            <div class="ac-form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-floppy"></i> Kaydet
+                </button>
+                <a href="/AdminAbout/AboutList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

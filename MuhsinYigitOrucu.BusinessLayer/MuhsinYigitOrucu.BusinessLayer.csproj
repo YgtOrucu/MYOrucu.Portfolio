@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="16.1.1" />
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+		<PackageReference Include="MailKit" Version="4.17.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MuhsinYigitOrucu.DataAccessLayer\MuhsinYigitOrucu.DataAccessLayer.csproj" />
+		<ProjectReference Include="..\MuhsinYigitOrucu.DtoLayer\MuhsinYigitOrucu.DtoLayer.csproj" />
+		<ProjectReference Include="..\MuhsinYigitOrucu.EntityLayer\MuhsinYigitOrucu.EntityLayer.csproj" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+</Project>

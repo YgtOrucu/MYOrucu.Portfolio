@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+@await Component.InvokeAsync("MYOrucuAdminLayoutHead")
+@RenderSection("Styles", required: false)
+<body>
+    <div id="sidebarBackdrop" aria-hidden="true"></div>
+    <div id="adminWrapper">
+        @await Component.InvokeAsync("MYOrucuAdminLayoutNavbar")
+        <div id="contentShell">
+
+            @await Component.InvokeAsync("MYOrucuAdminLayoutSidebar")
+
+            <main id="pageContent" role="main">
+                <div class="content-inner">
+                    @RenderBody()
+                </div>
+                @await Component.InvokeAsync("MYOrucuAdminLayoutFooter")
+            </main>
+        </div>
+    </div>
+    @await Component.InvokeAsync("MYOrucuAdminLayoutScript")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

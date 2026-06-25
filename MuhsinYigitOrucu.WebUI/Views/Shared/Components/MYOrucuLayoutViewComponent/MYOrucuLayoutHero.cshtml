@@ -1,0 +1,65 @@
+﻿@model GetForHeroSection
+<section id="hero">
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 order-lg-1 order-2">
+                <p class="hero-eyebrow">// Merhaba, ben</p>
+                <h1 class="hero-name">@Model.FullName</h1>
+                <div class="hero-typewriter">
+                    <span id="typewriter-text"></span><span class="typewriter-cursor" aria-hidden="true"></span>
+                </div>
+                <p class="hero-bio">@Model.ShortBio</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn-primary-accent">
+                        <i class="bi bi-grid me-1"></i> Projelere Bak
+                    </a>
+                    <a href="#contact" class="btn-outline-accent">
+                        İletişime Geç
+                    </a>
+                </div>
+                <div class="social-links">
+                    @if (!string.IsNullOrEmpty(Model.GithubUrl))
+                    {
+                        <a href="@Model.GithubUrl" target="_blank" rel="noopener" class="social-link" title="GitHub"><i class="bi bi-github"></i> </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.LinkedinUrl))
+                    {
+                        <a href="@Model.LinkedinUrl" target="_blank" rel="noopener" class="social-link" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.EmailAddress))
+                    {
+                        <a href="mailto:@Model.EmailAddress" class="social-link" title="E-posta"><i class="bi bi-envelope"></i></a>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-2 order-1">
+                <div class="hero-visual">
+                    <div class="hero-avatar-ring">
+                        @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                        {
+                            <img src="@Model.AvatarUrl" class="hero-avatar-img" alt="@Model.FullName Avatar" />
+                        }
+                        else
+                        {
+                            <div class="hero-avatar-placeholder">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                        }
+                        <div class="hero-badge">
+                            <span>●</span> Müsait · @Model.Location
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    window.appSettings = {
+        typewriterTitles: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model?.TypewriterTitles ?? new List<string> { "Full-Stack Developer", ".NET Developer", "Web Architect" }))
+    };
+</script>
+

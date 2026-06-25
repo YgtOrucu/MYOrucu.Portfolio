@@ -1,0 +1,81 @@
+﻿@model LoginDto
+
+
+<div class="admin-panel" id="panelLogin">
+
+    @if (ViewBag.LoginErrors is string error && error.Any())
+    {
+        <div class="alert alert-danger rg-validation-summary mb-3" style="background-color: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.2); color: #f87171; padding: 12px; border-radius: 6px;">
+            <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <span><strong>Giriş işlemi başarısız:</strong></span>
+            </div>
+            <ul class="mb-0 ps-3" style="font-size: 0.9rem; list-style-type: disc;">
+                <li>@error</li>
+            </ul>
+        </div>
+    }
+    <div asp-validation-summary="ModelOnly" class="validation-summary">
+        <div class="d-flex align-items-center mb-2">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+        </div>
+    </div>
+    <form asp-controller="Auth" asp-action="Login" method="post" novalidate>
+        @Html.AntiForgeryToken()
+
+        <div class="admin-field">
+            <label class="admin-label" for="loginEmail">E-posta Adresi</label>
+            <div class="admin-input-wrap">
+                <i class="bi bi-envelope admin-input-icon"></i>
+                <input type="email"
+                       class="admin-input"
+                       id="loginEmail"
+                       name="Email"
+                       placeholder="ornek@mail.com"
+                       autocomplete="email"
+                       required />
+            </div>
+            <span asp-validation-for="Email" class="rg-field-error"></span>
+        </div>
+
+        <div class="admin-field">
+            <label class="admin-label" for="loginPassword">Şifre</label>
+            <div class="admin-input-wrap">
+                <i class="bi bi-lock admin-input-icon"></i>
+                <input type="password"
+                       class="admin-input"
+                       id="loginPassword"
+                       name="Password"
+                       placeholder="••••••••"
+                       autocomplete="current-password"
+                       required />
+                <button type="button" class="admin-eye-btn" data-target="loginPassword" aria-label="Şifreyi göster/gizle">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <span asp-validation-for="Password" class="rg-field-error"></span>
+        </div>
+
+        <!-- Beni Hatırla -->
+        <div class="admin-remember">
+            <label class="admin-checkbox">
+                @Html.CheckBoxFor(x => x.RememberMe)
+                <span class="checkmark"></span>
+                <span class="remember-text">Beni Hatırla</span>
+            </label>
+        </div>
+
+        <button type="submit" class="admin-submit-btn">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Giriş Yap
+        </button>
+    </form>
+
+    <div class="admin-divider"><span>veya</span></div>
+
+    <button type="button" class="admin-switch-btn" id="goToRegister">
+        <i class="bi bi-person-plus me-1"></i>
+        Hesabın yok mu? <strong>Kayıt Ol</strong>
+    </button>
+</div>

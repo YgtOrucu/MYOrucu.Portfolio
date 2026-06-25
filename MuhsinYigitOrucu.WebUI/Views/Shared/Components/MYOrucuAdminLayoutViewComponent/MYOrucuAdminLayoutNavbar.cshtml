@@ -1,0 +1,37 @@
+﻿<header id="adminNavbar" role="banner">
+
+    <button id="sidebarToggle" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="adminSidebar">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <a href="/admin" class="navbar-brand-admin" title="Admin Paneli">
+        <div class="navbar-brand-icon">
+            <i class="bi bi-shield-check"></i>
+        </div>
+        <div class="navbar-brand-text">
+            Admin Panel
+            <small>Dashboard</small>
+        </div>
+    </a>
+
+    <div class="navbar-breadcrumb" aria-label="Konum">
+        <span class="nav-page-title">
+            / <span>@(ViewData["AdminSection"]?.ToString() ?? "Genel Bakış")</span>
+        </span>
+    </div>
+
+    <div class="navbar-actions">
+        <a href="/MuhsinYigitOrucu/Index" class="btn-site-link" target="_blank" rel="noopener" title="Ana siteyi yeni sekmede aç">
+            <i class="bi bi-arrow-up-right-square"></i>
+            Siteye Dön
+        </a>
+
+        <form asp-controller="Auth" asp-action="Logout" method="post" style="margin:0">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn-signout" title="Oturumu kapat">
+                <i class="bi bi-box-arrow-right"></i>
+                Çıkış Yap
+            </button>
+        </form>
+    </div>
+</header>

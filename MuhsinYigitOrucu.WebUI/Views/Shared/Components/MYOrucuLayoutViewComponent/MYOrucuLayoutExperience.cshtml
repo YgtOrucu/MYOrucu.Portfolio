@@ -1,0 +1,40 @@
+﻿@model List<GetForExperienceSectionDto>
+<section id="experience">
+    <div class="container">
+        <p class="section-label">02 / Deneyim</p>
+        <h2 class="section-title">Profesyonel Yolculuk</h2>
+        <div class="section-divider"></div>
+
+        @foreach (var exp in Model)
+        {
+            <div class="exp-card">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="exp-company">@exp.Company</p>
+                        <h3 class="exp-title">@exp.Title</h3>
+                        <p class="exp-date">
+                            <i class="bi bi-calendar3"></i>
+                            @exp.Date
+                            &nbsp;·&nbsp;
+                            <i class="bi bi-geo-alt"></i>
+                            @exp.WorkMethod
+                        </p>
+                        <ul class="exp-achievements">
+                            @foreach (var desc in exp.Description)
+                            {
+                                <li>@desc</li>
+                            }
+                        </ul>
+                        <div class="badge-wrap">
+                            @foreach (var tech in exp.UseTechnology)
+                            {
+                                <span class="tech-badge">@tech</span>
+                            }        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</section>

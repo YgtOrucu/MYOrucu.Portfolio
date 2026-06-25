@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Tüm Projeler";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+@await Component.InvokeAsync("MYOrucuLayoutHead")
+<body>
+    <div id="page-loader" role="status" aria-label="Yükleniyor">
+        <div class="loader-brand">MUHSİN YİĞİT ÖRÜCÜ</div>
+        <div class="spinner-border" aria-hidden="true"></div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+
+    <div id="main-content">
+
+        @await Component.InvokeAsync("MYOrucuLayoutNavbar")
+        @await Component.InvokeAsync("MYOrucuLayoutSidebar")
+        @await Component.InvokeAsync("MYOrucuLayoutUIProject")
+        @await Component.InvokeAsync("MYOrucuLayoutContact")
+        @await Component.InvokeAsync("MYOrucuLayoutFooter")
+    </div>
+    @await Component.InvokeAsync("MYOrucuLayoutLoginModal")
+    @await Component.InvokeAsync("MYOrucuLayoutScript")
+</body>
+</html>

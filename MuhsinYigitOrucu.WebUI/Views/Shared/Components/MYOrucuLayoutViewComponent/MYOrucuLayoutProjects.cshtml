@@ -1,0 +1,90 @@
+﻿@model List<GetForProjectSection>
+@{
+    var homeProjects = Model.Where(p => p.ShowOnHomePage).ToList();
+}
+
+<section id="projects">
+    <div class="container">
+        <p class="section-label">04 / Projeler</p>
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <h2 class="section-title mb-0">Öne Çıkan Çalışmalar</h2>
+
+            <a href="/Project/GetAllProject" class="btn-outline-accent d-inline-flex align-items-center gap-2 py-2 px-3 rounded text-decoration-none">
+                Tüm Projelerim <i class="bi bi-arrow-right fs-5"></i>
+            </a>
+        </div>
+
+        <div class="section-divider mt-0 mb-4"></div>
+
+        <div class="row g-3">
+            @if (homeProjects.Any())
+            {
+                foreach (var project in homeProjects)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card">
+
+                            <div class="project-img-wrap">
+                                <img src="@project.ImageUrl"
+                                     alt="@project.Title"
+                                     loading="lazy"
+                                     onerror="this.parentElement.classList.add('img-error')" />
+                                <div class="project-img-fallback">
+                                    <i class="bi bi-display"></i>
+                                </div>
+                            </div>
+
+                            <div class="project-body">
+
+                                <h3 class="project-name">@project.Title</h3>
+                                <p class="project-desc">@project.MiniDescription</p>
+
+                                @{
+                                    var techs = project.UseTechnology ?? new List<string>();
+                                    var visible = techs.Take(4).ToList();
+                                    var remaining = techs.Count - visible.Count;
+                                }
+                                <div class="tech-chips">
+                                    @foreach (var tech in visible)
+                                    {
+                                        <span class="tech-chip">@tech</span>
+                                    }
+                                    @if (remaining > 0)
+                                    {
+                                        <span class="tech-chip tech-chip-more">+@remaining</span>
+                                    }
+                                </div>
+
+                                <div class="project-actions">
+                                    <a href="@project.GithubLink"
+                                       target="_blank"
+                                       rel="noopener"
+                                       class="proj-btn proj-btn-ghost">
+                                        <i class="bi bi-github"></i> GitHub
+                                    </a>
+                                    <a href="/Project/ProjectDetails/@project.ProjectId"
+                                       target="_blank"
+                                       rel="noopener"
+                                       class="proj-btn proj-btn-filled">
+                                        <i class="bi bi-box-arrow-up-right"></i> Ayrıntılar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="project-empty-state">
+                        <i class="bi bi-hourglass-split"></i>
+                        <p>Henüz anasayfada gösterilecek bir proje seçilmedi.</p>
+                        <span>Güncelleniyor...</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

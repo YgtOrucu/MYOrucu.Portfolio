@@ -1,0 +1,119 @@
+﻿@model UpdateSkillsDto
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yetenek Kategorisi Güncelle";
+    ViewData["AdminSection"] = "Yetenekler";
+}
+
+<nav class="su-breadcrumb" aria-label="breadcrumb">
+    <a href="/AdminSkill/SkillList"><i class="bi bi-code-slash"></i> Yetenekler</a>
+    <i class="bi bi-chevron-right bc-sep"></i>
+    <span>Güncelle &mdash; #@Model.SkillsId</span>
+</nav>
+
+<div class="su-header">
+    <h1 class="su-title">Yetenek Kategorisini Güncelle</h1>
+    <p class="su-subtitle">// skills/update &mdash; mevcut kategori ve yetenekleri düzenle</p>
+</div>
+<div asp-validation-summary="ModelOnly" class="validation-summary">
+    <div class="d-flex align-items-center mb-2">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+    </div>
+</div>
+<form method="post" action="/AdminSkill/SkillUpdate">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="SkillsId" value="@Model.SkillsId" />
+
+    <div class="su-card">
+        <div class="su-card-header">
+            <div class="su-card-icon"><i class="bi bi-folder2-open"></i></div>
+            <span class="su-card-title">// Kategori Bilgisi</span>
+            <span class="su-id-chip">ID: @Model.SkillsId</span>
+        </div>
+        <div class="su-card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="su-field">
+                        <label class="su-label" for="CategoryName">Kategori Adı</label>
+                        <input type="text" class="su-input" id="CategoryName" name="CategoryName"
+                               value="@Model.CategoryName"
+                               placeholder="Backend, Frontend, DevOps..." required />
+                        <span class="su-hint">Yetenek grubunun başlığı olarak gösterilecek.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="su-card">
+        <div class="su-card-header">
+            <div class="su-card-icon"><i class="bi bi-tags"></i></div>
+            <span class="su-card-title">// Yetenek Öğeleri (SkillItem)</span>
+        </div>
+        <div class="su-card-body">
+
+            <p class="su-hint" style="margin-bottom:.75rem;">
+                <strong style="color:var(--text-secondary)">Yetenek Adı</strong> zorunludur.
+                <strong style="color:var(--text-secondary)">Bootstrap Icon Sınıfı</strong> isteğe bağlıdır
+                (örn: <code style="color:var(--accent)">bi bi-server</code>).
+            </p>
+
+            @if (Model.SkillItem != null && Model.SkillItem.Any())
+            {
+                <div class="existing-chip">
+                    <i class="bi bi-check-circle-fill"></i>
+                    @Model.SkillItem.Count mevcut yetenek yüklendi
+                </div>
+            }
+
+            <div class="dyn-header">
+                <span class="dyn-col-label">Yetenek Adı (Key)</span>
+                <span class="dyn-col-label">İkon Sınıfı (Value)</span>
+                <span></span>
+            </div>
+
+            <div class="dyn-list" id="skillItemList">
+                @if (Model.SkillItem != null)
+                {
+                    int index = 0;
+                    foreach (var item in Model.SkillItem)
+                    {
+                        <div class="dyn-row">
+                            <input type="text" class="su-input"
+                                   name="SkillItem[@index].Key"
+                                   value="@item.Key"
+                                   placeholder="C# / .NET / React ..." />
+                            <input type="text" class="su-input"
+                                   name="SkillItem[@index].Value"
+                                   value="@item.Value"
+                                   placeholder="bi bi-code-slash" />
+                            <button type="button" class="btn-dyn-remove" title="Kaldır">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </div>
+                        index++;
+                    }
+                }
+            </div>
+
+            <button type="button" class="btn-dyn-add" id="addSkillItem">
+                <i class="bi bi-plus-lg"></i> Yeni Yetenek Ekle
+            </button>
+        </div>
+    </div>
+
+    <div class="su-card">
+        <div class="su-card-body">
+            <div class="su-form-actions">
+                <button type="submit" class="btn-update">
+                    <i class="bi bi-arrow-repeat"></i> Güncelle
+                </button>
+                <a href="/AdminSkill/SkillList" class="btn-cancel">
+                    <i class="bi bi-x-lg"></i> Vazgeç
+                </a>
+            </div>
+        </div>
+    </div>
+
+</form>

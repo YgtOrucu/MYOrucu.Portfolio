@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+@await Component.InvokeAsync("MYOrucuLayoutHead")
+<body>
+    @RenderBody()
+    <div id="page-loader" role="status" aria-label="Yükleniyor">
+        <div class="loader-brand">MUHSİN YİĞİT ÖRÜCÜ</div>
+        <div class="spinner-border" aria-hidden="true"></div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+
+    <div id="main-content">
+
+        @if (ViewBag.SendMessageError is List<string> sendErrors && sendErrors.Any())
+        {
+            <div class="modal fade" id="sendMessageErrorModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background-color: #1e2530; border: 1px solid #ff4a5a; border-radius: 12px; color: #ffffff;">
+
+                        <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <h5 class="modal-title d-flex align-items-center" style="color: #ff4a5a; font-weight: 600;">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i> Gönderim Başarısız
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                        </div>
+
+                        <div class="modal-body py-4">
+                            <p class="fw-bold mb-3" style="color: #ff4a5a;">Lütfen aşağıdaki detayları kontrol edin:</p>
+                            <ul class="mb-0 ps-3" style="color: #cbd5e1; font-size: 0.95rem; list-style-type: square;">
+                                @foreach (var error in sendErrors)
+                                {
+                                    <li class="mb-2">@error</li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="modal-footer" style="border-top: none;">
+                            <button type="button" class="btn btn-sm px-4 text-white" data-bs-dismiss="modal"
+                                    style="background-color: #334155; border: none; border-radius: 6px;">
+                                Kapat
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.SendMessageSuccess != null)
+        {
+            <div class="modal fade" id="sendMessageSuccessModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background-color: #1e2530; border: 1px solid #00badb; border-radius: 12px; color: #ffffff;">
+
+                        <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <h5 class="modal-title d-flex align-items-center" style="color: #00badb; font-weight: 600;">
+                                <i class="bi bi-send-check-fill me-2"></i> Mesaj İletildi
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                        </div>
+
+                        <div class="modal-body text-center py-4">
+                            <div class="mb-3" style="color: #00badb;">
+                                <i class="bi bi-envelope-heart" style="font-size: 3.5rem;"></i>
+                            </div>
+                            <p class="fs-5 JSON-msg" style="color: #e2e8f0;">@ViewBag.SendMessageSuccess</p>
+                        </div>
+
+                        <div class="modal-footer" style="border-top: none; justify-content: center;">
+                            <button type="button" class="btn w-100 py-2 fw-bold" data-bs-dismiss="modal"
+                                    style="background-color: #00badb; color: #111827; border: none; border-radius: 8px; transition: all 0.2s;">
+                                Harika
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @await Component.InvokeAsync("MYOrucuLayoutNavbar")
+        @await Component.InvokeAsync("MYOrucuLayoutSidebar")
+        @await Component.InvokeAsync("MYOrucuLayoutHero")
+        @await Component.InvokeAsync("MYOrucuLayoutAbout")
+        @await Component.InvokeAsync("MYOrucuLayoutExperience")
+        @await Component.InvokeAsync("MYOrucuLayoutSkills")
+        @await Component.InvokeAsync("MYOrucuLayoutProjects")
+        @await Component.InvokeAsync("MYOrucuLayoutContact")
+        @await Component.InvokeAsync("MYOrucuLayoutFooter")
+
+    </div>
+    @await Component.InvokeAsync("MYOrucuLayoutLoginModal")
+    @await Component.InvokeAsync("MYOrucuLayoutScript")
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

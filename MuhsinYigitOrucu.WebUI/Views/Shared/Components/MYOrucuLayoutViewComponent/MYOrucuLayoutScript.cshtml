@@ -1,0 +1,23 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.authBackendData = {
+    showLogin: '@(TempData["ShowLoginPanel"] != null ? "true" : "false")',
+    registeredEmail: '@(TempData["RegisteredEmail"] ?? "")',
+    hasRegisterErrors: '@(ViewBag.RegisterErrors != null ? "true" : "false")',
+    hasLoginErrors: '@(ViewBag.LoginErrors != null ? "true" : "false")'
+    };
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var successModal = new bootstrap.Modal(document.getElementById('sendMessageSuccessModal'));
+    successModal.show();
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var sendErrorModal = new bootstrap.Modal(document.getElementById('sendMessageErrorModal'));
+    sendErrorModal.show();
+    });
+</script>
+<script src="~/js/myoruculayout.js"></script>
+<script src="~/js/projectDetailUI.js"></script>

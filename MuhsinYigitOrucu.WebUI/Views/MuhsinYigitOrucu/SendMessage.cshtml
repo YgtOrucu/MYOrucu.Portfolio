@@ -1,0 +1,38 @@
+﻿@model SendMessageDto
+
+<div class="col-lg-7">
+    <div class="contact-form-wrap">
+        <div asp-validation-summary="ModelOnly" class="validation-summary">
+            <div class="d-flex align-items-center mb-2">
+                <i class="fa-solid fa-circle-exclamation me-2"></i>
+                <span><strong>Lütfen aşağıdaki hataları düzeltin:</strong></span>
+            </div>
+        </div>
+        <form asp-controller="MuhsinYigitOrucu" asp-action="SendMessage" method="post" novalidate>
+            @Html.AntiForgeryToken()
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="senderName">Adınız</label>
+                    <input type="text" class="form-control" asp-for="NameSurname" placeholder="Ali Yılmaz" required />
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="senderEmail">E-posta Adresiniz</label>
+                    <input type="email" class="form-control" asp-for="Email" placeholder="ali@example.com" required />
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="subject">Konu</label>
+                    <input type="text" class="form-control" asp-for="Subject" placeholder="Proje iş birliği hakkında..." />
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="messageBody">Mesajınız</label>
+                    <textarea class="form-control" asp-for="Description" rows="5" placeholder="Merhaba, seninle bir proje hakkında konuşmak istiyorum..." required></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn-primary-accent" style="width:100%; justify-content:center; display:flex; align-items:center; gap:.5rem;">
+                        <i class="bi bi-send"></i> Mesaj Gönder
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

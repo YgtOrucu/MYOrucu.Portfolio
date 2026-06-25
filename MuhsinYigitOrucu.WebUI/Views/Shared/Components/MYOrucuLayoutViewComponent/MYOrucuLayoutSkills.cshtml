@@ -1,0 +1,28 @@
+﻿@model List<GetForSkillsSection>
+
+<section id="skills">
+    <div class="container">
+        <p class="section-label">03 / Yetenekler</p>
+        <h2 class="section-title">Teknoloji Yığını</h2>
+        <div class="section-divider"></div>
+
+        @foreach (var category in Model)
+        {
+            <div class="skill-group">
+                <p class="skill-category-label">// @category.CategoryName</p>
+                <div class="skill-chip-grid">
+                    @foreach (var item in category.SkillItem)
+                    {
+                        <div class="skill-chip">
+                            @if (!string.IsNullOrWhiteSpace(item.Value))
+                            {
+                                <i class="@item.Value skill-chip-icon" aria-hidden="true"></i>
+                            }
+                            <span class="skill-chip-name">@item.Key</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>

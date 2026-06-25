@@ -1,0 +1,96 @@
+﻿@model List<SkillsListDto>
+@{
+    Layout = "~/Views/Shared/_MYOrucuAdminLayout.cshtml";
+    ViewData["Title"] = "Yetenekler";
+    ViewData["AdminSection"] = "Yetenekler";
+    int count = 0;
+}
+
+<div class="sl-header">
+    <div>
+        <h1 class="sl-title">Yetenekler</h1>
+        <p class="sl-subtitle">// skills &mdash; yetenek kategorileri yönetimi</p>
+    </div>
+    <a href="/AdminSkill/SkillCreate" class="btn-add">
+        <i class="bi bi-plus-lg"></i> Yeni Kategori Ekle
+    </a>
+</div>
+
+<div class="sl-card">
+    <div class="sl-card-header">
+        <div class="sl-card-icon"><i class="bi bi-code-slash"></i></div>
+        <span class="sl-card-title">Yetenek Kategorileri</span>
+        <span class="sl-count-badge">@Model.Count kategori</span>
+    </div>
+
+    <div class="sl-table-wrap">
+        @if (!Model.Any())
+        {
+            <div class="sl-empty">
+                <i class="bi bi-code-slash"></i>
+                <p>Henüz yetenek kategorisi eklenmemiş. "Yeni Kategori Ekle" ile başlayın.</p>
+            </div>
+        }
+        else
+        {
+            <table class="sl-table">
+                <thead>
+                    <tr>
+                        <th style="width:60px">#</th>
+                        <th style="width:200px">Kategori Adı</th>
+                        <th>Yetenek Öğeleri</th>
+                        <th style="width:160px; text-align:right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><span class="cell-mono">@count</span></td>
+                            <td>
+                                <span class="cell-category">
+                                    <i class="bi bi-folder2-open"></i>
+                                    @item.CategoryName
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.SkillItem != null && item.SkillItem.Any())
+                                {
+                                    <div class="skill-badges">
+                                        @foreach (var skill in item.SkillItem)
+                                        {
+                                            <span class="skill-badge">
+                                                @if (!string.IsNullOrWhiteSpace(skill.Value))
+                                                {
+                                                    <i class="@skill.Value"></i>
+                                                }
+                                                @skill.Key
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="skill-badge-empty">— yetenek yok —</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-cell">
+                                    <a href="/AdminSkill/SkillUpdate?id=@item.SkillsId" class="btn-edit">
+                                        <i class="bi bi-pencil"></i> Düzenle
+                                    </a>
+                                    <a href="/AdminSkill/SkillDelete?id=@item.SkillsId"
+                                       class="btn-delete"
+                                       onclick="return confirm('Bu kategoriyi ve tüm yeteneklerini silmek istediğinize emin misiniz?')">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
