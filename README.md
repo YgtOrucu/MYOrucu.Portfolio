@@ -24,29 +24,29 @@ Bu proje, modern yazılım mimarilerine uygun olarak geliştirilmiş, dinamik i�
   <summary><b>🔍 Ekran Görüntülerini İncelemek İçin Tıklayın</b></summary>
   <br>
   <p align="center">
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180958" src="https://github.com/user-attachments/assets/e24d72d7-e7e6-498e-97bc-66b121eb2bc5" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180931" src="https://github.com/user-attachments/assets/ec55a41a-924c-42f6-8249-fb35b5bef904" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180909" src="https://github.com/user-attachments/assets/db739647-76fe-40ff-8e21-1bb2054c2d9d" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180858" src="https://github.com/user-attachments/assets/7c8369a1-336b-4355-80ae-b47bb7543605" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180840" src="https://github.com/user-attachments/assets/1492307a-386a-426f-becd-3a0c396dde55" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180828" src="https://github.com/user-attachments/assets/000f2f19-c118-46ac-b986-0fd1d4f0dc95" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180813" src="https://github.com/user-attachments/assets/87c040b0-f77a-4b83-8791-4daebc83b78c" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180804" src="https://github.com/user-attachments/assets/7fd1c634-4fd4-43df-99c4-bdb4ae07dcd8" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 180721" src="https://github.com/user-attachments/assets/122910f2-aecd-4d2d-ae51-defdaf749b4f" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-14 181040" src="https://github.com/user-attachments/assets/defab117-a437-4693-836e-739842e00455" />
-    <br><br>
-    <img width="100%" alt="Ekran görüntüsü 2026-06-15 093923" src="https://github.com/user-attachments/assets/abfa77f7-2d55-4b8e-a9f0-a129a8331692" />
-    <br><br>
-  </p>
+<img width="100%" alt="Ekran görüntüsü 2026-06-15 093923" src="https://github.com/user-attachments/assets/1e2ed607-61ea-4360-82cb-21ebc06ec735" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 181040" src="https://github.com/user-attachments/assets/0fe65ebb-525c-4de9-b172-8e735e746585" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180958" src="https://github.com/user-attachments/assets/262653ef-81be-41df-8a24-8e0435b54a84" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180931" src="https://github.com/user-attachments/assets/67ea21cf-fe37-4e4a-b324-34a97b9e1902" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180909" src="https://github.com/user-attachments/assets/b2d5898f-8a26-47ef-85be-a3469ab58818" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180858" src="https://github.com/user-attachments/assets/b45a79a7-8a17-4e7c-946e-522430601a00" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180840" src="https://github.com/user-attachments/assets/ef5b6903-b8aa-40ef-9ec1-e19fba6f3433" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180828" src="https://github.com/user-attachments/assets/9df15eb3-c65d-4a55-b6fa-547245354bb2" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180813" src="https://github.com/user-attachments/assets/5e427976-6207-4a00-9fcd-0c6041a375e1" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180804" src="https://github.com/user-attachments/assets/3ffc99d2-26bf-4461-bebb-95958f73568a" />
+     <br><br>
+<img width="100%" alt="Ekran görüntüsü 2026-06-14 180721" src="https://github.com/user-attachments/assets/68f6393d-8bc2-4d5a-82d1-7e73719ad321" />
+     <br><br>
+ </p>
 </details>
 
 ---
